@@ -38,6 +38,6 @@ public class Spbtpj1Controller {
 		dto.setGroup(viewModel.getGroup());
 		dto.setPath(viewModel.getPath());
 		insertService.execute(dto);
-		return init(model);
+		return "redirect:/spbtpj1/init";
 	}
 }

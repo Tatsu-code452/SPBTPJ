@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 import org.thymeleaf.util.StringUtils;
@@ -28,6 +30,25 @@ public class FilePathDao {
 			e.printStackTrace();
 			result = new ArrayList<FilePathDto>();
 		}
+		return result;
+	}
+
+	public boolean writeAll(Map<String, List<String>> filePathMap) {
+		boolean result = true;
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			objectMapper.writeValue(new File(StringUtils.concat(FILE_PATH, FILE_NAME)),
+					filePathMap.entrySet().stream().sorted(Map.Entry.comparingByKey()).map(v -> {
+						FilePathDto workDto = new FilePathDto();
+						workDto.setGroup(v.getKey());
+						workDto.setPathList(v.getValue());
+						return workDto;
+					}).collect(Collectors.toList()));
+		} catch (IOException e) {
+			e.printStackTrace();
+			result = false;
+		}
+
 		return result;
 	}
 }
