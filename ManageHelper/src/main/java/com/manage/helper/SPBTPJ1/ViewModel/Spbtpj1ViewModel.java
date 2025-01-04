@@ -4,8 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.manage.helper.SPBTPJ1.Model.FilePathGroupDto;
-
+import com.manage.helper.Dao.DaoModel.FilePathGroupDto;
 import lombok.Data;
 
 @Data

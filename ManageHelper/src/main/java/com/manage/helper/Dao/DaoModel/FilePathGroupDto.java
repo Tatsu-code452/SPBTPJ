@@ -1,4 +1,4 @@
-package com.manage.helper.SPBTPJ1.Model;
+package com.manage.helper.Dao.DaoModel;
 
 import java.io.Serializable;
 import java.util.List;

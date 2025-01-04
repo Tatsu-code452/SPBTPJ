@@ -1,4 +1,4 @@
-package com.manage.helper.COMMON.Dao;
+package com.manage.helper.Dao;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,8 +13,8 @@ import org.thymeleaf.util.StringUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.manage.helper.COMMON.CommonConst;
-import com.manage.helper.SPBTPJ1.Model.FilePathDto;
-import com.manage.helper.SPBTPJ1.Model.FilePathGroupDto;
+import com.manage.helper.Dao.DaoModel.FilePathDto;
+import com.manage.helper.Dao.DaoModel.FilePathGroupDto;
 
 @Component
 public class FilePathDao {
