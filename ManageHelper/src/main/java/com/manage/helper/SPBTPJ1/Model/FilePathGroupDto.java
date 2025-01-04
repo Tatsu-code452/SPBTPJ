@@ -1,6 +1,7 @@
 package com.manage.helper.SPBTPJ1.Model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
@@ -8,8 +9,7 @@ import lombok.Data;
 
 @Data
 @Component
-public class FilePathDto implements Serializable {
-	private String name;
-	private String path;
-	private String encodePath;
+public class FilePathGroupDto implements Serializable {
+	private String group;
+	private List<FilePathDto> pathList;
 }

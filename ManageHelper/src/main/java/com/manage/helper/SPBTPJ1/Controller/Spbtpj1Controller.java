@@ -1,5 +1,10 @@
 package com.manage.helper.SPBTPJ1.Controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.manage.helper.SPBTPJ1.BusinessLogic.Service.InitService;
 import com.manage.helper.SPBTPJ1.BusinessLogic.Service.InsertService;
@@ -38,6 +44,26 @@ public class Spbtpj1Controller {
 		dto.setGroup(viewModel.getGroup());
 		dto.setPath(viewModel.getPath());
 		insertService.execute(dto);
+		return "redirect:/spbtpj1/init";
+	}
+
+	@GetMapping("/openFile")
+	public String openFile(@RequestParam("filename") String filename) {
+		try {
+			File file = new File(filename);
+			if (file.exists()) {
+				List<String> cmd = new ArrayList<String>();
+				cmd.add("cmd.exe");
+				cmd.add("/c");
+				cmd.add("start");
+				cmd.add("explorer");
+				cmd.add(file.getPath());
+				Runtime.getRuntime().exec(cmd.stream().toArray(String[]::new));
+			}
+		} catch (IOException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
 		return "redirect:/spbtpj1/init";
 	}
 }

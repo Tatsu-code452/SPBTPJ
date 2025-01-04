@@ -1,9 +1,1 @@
-[
-	{
-		"group": "AAA",
-		"pathList": [
-			"/hoge1",
-			"/hoge/hoge2"
-		]
-	}
-]
+[{"group":"AAA","pathList":[{"name":"C:\\workspace\\web\\SPBTPJ\\data","path":"C:\\workspace\\web\\SPBTPJ\\data","encodePath":"C%3A%5Cworkspace%5Cweb%5CSPBTPJ%5Cdata"},{"name":"C:\\workspace\\web\\SPBTPJ","path":"C:\\workspace\\web\\SPBTPJ","encodePath":"C%3A%5Cworkspace%5Cweb%5CSPBTPJ"}]},{"group":"BBB","pathList":[{"name":"C:\\workspace","path":"C:\\workspace","encodePath":"C%3A%5Cworkspace"}]}]

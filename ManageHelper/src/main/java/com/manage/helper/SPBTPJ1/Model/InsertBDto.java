@@ -9,5 +9,5 @@ import lombok.Data;
 public class InsertBDto {
 	private String group;
 	private String path;
-	private Map<String, List<String>> filePathMap;
+	private Map<String, List<FilePathDto>> filePathMap;
 }
