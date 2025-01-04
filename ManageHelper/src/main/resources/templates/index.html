@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>ファイルパスのドラッグ＆ドロップ</title>
+    <script>
+        function handleDrop(event) {
+            event.preventDefault();
+            let files = event.dataTransfer.files;
+            if (files.length > 0) {
+                document.getElementById("filePath").value = files[0].path;
+            }
+        }
+
+        function handleDragOver(event) {
+            event.preventDefault();
+        }
+    </script>
+</head>
+<body>
+    <h1>ファイルパスをドラッグ＆ドロップしてください</h1>
+    <div id="dropzone" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" style="width:300px;height:200px;border:1px solid black;">
+        ドラッグ＆ドロップゾーン
+    </div>
+    <form method="post" action="/submit">
+        <input type="text" id="filePath" name="filePath" readonly>
+        <button type="submit">送信</button>
+    </form>
+</body>
+</html>

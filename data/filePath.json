@@ -1,0 +1,9 @@
+[
+	{
+		"group": "AAA",
+		"pathList": [
+			"/hoge1",
+			"/hoge/hoge2"
+		]
+	}
+]

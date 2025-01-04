@@ -1,0 +1,13 @@
+package com.manage.helper.SPBTPJ1.Model;
+
+import java.util.List;
+import java.util.Map;
+
+import lombok.Data;
+
+@Data
+public class InsertBDto {
+	private String group;
+	private String path;
+	private Map<String, List<String>> filePathMap;
+}
