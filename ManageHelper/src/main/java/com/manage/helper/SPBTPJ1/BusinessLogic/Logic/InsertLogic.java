@@ -5,7 +5,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.manage.helper.COMMON.BaseLogic;
@@ -14,10 +13,12 @@ import com.manage.helper.Dao.DaoModel.FilePathDto;
 import com.manage.helper.Dao.DaoModel.FilePathGroupDto;
 import com.manage.helper.SPBTPJ1.Model.InsertBDto;
 
+import lombok.RequiredArgsConstructor;
+
 @Component
+@RequiredArgsConstructor
 public class InsertLogic extends BaseLogic<InsertBDto> {
-	@Autowired
-	FilePathDao filePathDao;
+	private final FilePathDao filePathDao;
 
 	@Override
 	protected boolean loadData(InsertBDto dto) {

@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,13 +19,14 @@ import com.manage.helper.SPBTPJ1.Model.InitBDto;
 import com.manage.helper.SPBTPJ1.Model.InsertBDto;
 import com.manage.helper.SPBTPJ1.ViewModel.Spbtpj1ViewModel;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
 @RequestMapping("/spbtpj1")
+@RequiredArgsConstructor
 public class Spbtpj1Controller {
-	@Autowired
-	private InitService initService;
-	@Autowired
-	private InsertService insertService;
+	private final InitService initService;
+	private final InsertService insertService;
 
 	@GetMapping("/init")
 	public String init(Model model) {
