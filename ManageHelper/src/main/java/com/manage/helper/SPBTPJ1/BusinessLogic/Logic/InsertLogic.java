@@ -3,6 +3,8 @@ package com.manage.helper.SPBTPJ1.BusinessLogic.Logic;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
@@ -20,11 +22,13 @@ import lombok.RequiredArgsConstructor;
 public class InsertLogic extends BaseLogic<InsertBDto> {
 	private final FilePathDao filePathDao;
 
+	private Map<String, List<FilePathDto>> filePathMap;
+
 	@Override
 	protected boolean loadData(InsertBDto dto) {
 		boolean result = true;
-		dto.setFilePathMap(filePathDao.readAll().stream()
-				.collect(Collectors.toMap(FilePathGroupDto::getGroup, FilePathGroupDto::getPathList)));
+		filePathMap = filePathDao.readAll().stream()
+				.collect(Collectors.toMap(FilePathGroupDto::getGroup, FilePathGroupDto::getPathList));
 		return result;
 	}
 
@@ -37,10 +41,10 @@ public class InsertLogic extends BaseLogic<InsertBDto> {
 		path.setName(dto.getPath());
 		path.setPath(dto.getPath());
 		path.setEncodePath(URLEncoder.encode(dto.getPath(), StandardCharsets.UTF_8));
-		if (!dto.getFilePathMap().containsKey(group)) {
-			dto.getFilePathMap().put(group, new ArrayList<FilePathDto>());
+		if (!filePathMap.containsKey(group)) {
+			filePathMap.put(group, new ArrayList<FilePathDto>());
 		}
-		dto.getFilePathMap().get(group).add(path);
+		filePathMap.get(group).add(path);
 
 		return result;
 	}
@@ -48,7 +52,7 @@ public class InsertLogic extends BaseLogic<InsertBDto> {
 	@Override
 	protected boolean saveData(InsertBDto dto) {
 		boolean result = true;
-		result = filePathDao.writeAll(dto.getFilePathMap());
+		result = filePathDao.writeAll(filePathMap);
 		return result;
 	}
 }
