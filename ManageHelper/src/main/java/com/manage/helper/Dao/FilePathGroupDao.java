@@ -8,18 +8,18 @@ import org.thymeleaf.util.StringUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.manage.helper.COMMON.BaseDao;
 import com.manage.helper.COMMON.CommonConst;
-import com.manage.helper.Dao.DaoModel.FilePathDto;
+import com.manage.helper.Dao.DaoModel.FilePathGroupDto;
 
 import jakarta.annotation.PostConstruct;
 
 @Component
-public class FilePathDao extends BaseDao<FilePathDto> {
+public class FilePathGroupDao extends BaseDao<FilePathGroupDto> {
 	@PostConstruct
 	public void setUp() {
-		super.setFileName(StringUtils.concat(CommonConst.FILE_PATH, CommonConst.FILE_NAME_FILE_PATH));
-		super.setTypeRef(new TypeReference<FilePathDto>() {
+		super.setFileName(StringUtils.concat(CommonConst.FILE_PATH, CommonConst.FILE_NAME_FILE_PATH_GROUP));
+		super.setTypeRef(new TypeReference<FilePathGroupDto>() {
 		});
-		super.setTypeRefList(new TypeReference<List<FilePathDto>>() {
+		super.setTypeRefList(new TypeReference<List<FilePathGroupDto>>() {
 		});
 	}
 

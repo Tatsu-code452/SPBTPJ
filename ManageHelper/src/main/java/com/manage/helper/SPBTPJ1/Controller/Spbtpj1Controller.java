@@ -42,7 +42,7 @@ public class Spbtpj1Controller {
 	@PostMapping("/insert")
 	public String insert(Model model, @ModelAttribute Spbtpj1ViewModel viewModel) {
 		InsertBDto dto = new InsertBDto();
-		dto.setGroup(viewModel.getGroup());
+		dto.setGroupId(viewModel.getGroupId());
 		dto.setPath(viewModel.getPath());
 		insertService.execute(dto);
 		return Pages.PAGE_SPBTPJ1_REDIRECT;

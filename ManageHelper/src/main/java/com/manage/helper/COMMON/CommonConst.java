@@ -7,5 +7,6 @@ public final class CommonConst {
 
 	public static final String FILE_PATH = "C:\\workspace\\web\\SPBTPJ\\data\\";
 	public static final String FILE_NAME_FILE_PATH = "filePath.json";
+	public static final String FILE_NAME_FILE_PATH_GROUP = "filePathGroup.json";
 
 }

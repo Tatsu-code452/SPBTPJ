@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import com.manage.helper.COMMON.BaseLogic;
 import com.manage.helper.Dao.FilePathDao;
 import com.manage.helper.Dao.DaoModel.FilePathDto;
-import com.manage.helper.Dao.DaoModel.FilePathGroupDto;
 import com.manage.helper.SPBTPJ1.Model.InsertBDto;
 
 import lombok.RequiredArgsConstructor;
@@ -22,13 +21,13 @@ import lombok.RequiredArgsConstructor;
 public class InsertLogic extends BaseLogic<InsertBDto> {
 	private final FilePathDao filePathDao;
 
-	private Map<String, List<FilePathDto>> filePathMap;
+	private Map<String, List<FilePathDto.FilePathInfoDto>> filePathMap;
 
 	@Override
 	protected boolean loadData(InsertBDto dto) {
 		boolean result = true;
 		filePathMap = filePathDao.readAll().stream()
-				.collect(Collectors.toMap(FilePathGroupDto::getGroup, FilePathGroupDto::getPathList));
+				.collect(Collectors.toMap(FilePathDto::getGroupId, FilePathDto::getPathList));
 		return result;
 	}
 
@@ -36,15 +35,14 @@ public class InsertLogic extends BaseLogic<InsertBDto> {
 	protected boolean createData(InsertBDto dto) {
 		boolean result = true;
 
-		String group = dto.getGroup();
-		FilePathDto path = new FilePathDto();
+		FilePathDto.FilePathInfoDto path = new FilePathDto.FilePathInfoDto();
 		path.setName(dto.getPath());
 		path.setPath(dto.getPath());
 		path.setEncodePath(URLEncoder.encode(dto.getPath(), StandardCharsets.UTF_8));
-		if (!filePathMap.containsKey(group)) {
-			filePathMap.put(group, new ArrayList<FilePathDto>());
+		if (!filePathMap.containsKey(dto.getGroupId())) {
+			filePathMap.put(dto.getGroupId(), new ArrayList<FilePathDto.FilePathInfoDto>());
 		}
-		filePathMap.get(group).add(path);
+		filePathMap.get(dto.getGroupId()).add(path);
 
 		return result;
 	}
@@ -52,7 +50,12 @@ public class InsertLogic extends BaseLogic<InsertBDto> {
 	@Override
 	protected boolean saveData(InsertBDto dto) {
 		boolean result = true;
-		result = filePathDao.writeAll(filePathMap);
+		result = filePathDao.writeAll(filePathMap.entrySet().stream().sorted(Map.Entry.comparingByKey()).map(v -> {
+			FilePathDto workDto = new FilePathDto();
+			workDto.setGroupId(v.getKey());
+			workDto.setPathList(v.getValue());
+			return workDto;
+		}).collect(Collectors.toList()));
 		return result;
 	}
 }

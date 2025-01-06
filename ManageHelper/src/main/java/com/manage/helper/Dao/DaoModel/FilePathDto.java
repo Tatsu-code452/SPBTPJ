@@ -1,15 +1,19 @@
 package com.manage.helper.Dao.DaoModel;
 
 import java.io.Serializable;
-
-import org.springframework.stereotype.Component;
+import java.util.List;
 
 import lombok.Data;
 
 @Data
-@Component
 public class FilePathDto implements Serializable {
-	private String name;
-	private String path;
-	private String encodePath;
+	private String groupId;
+	private List<FilePathInfoDto> pathList;
+
+	@Data
+	public static class FilePathInfoDto {
+		private String name;
+		private String path;
+		private String encodePath;
+	}
 }

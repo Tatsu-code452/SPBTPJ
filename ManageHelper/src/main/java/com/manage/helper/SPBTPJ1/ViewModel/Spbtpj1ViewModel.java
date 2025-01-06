@@ -1,17 +1,17 @@
 package com.manage.helper.SPBTPJ1.ViewModel;
 
 import java.util.List;
+import java.util.Map;
 
-import org.springframework.stereotype.Component;
+import com.manage.helper.Dao.DaoModel.FilePathDto;
 
-import com.manage.helper.Dao.DaoModel.FilePathGroupDto;
 import lombok.Data;
 
 @Data
-@Component
 public class Spbtpj1ViewModel {
-	private List<FilePathGroupDto> filePathList;
+	private Map<String, String> filePathGroupMap;
+	private List<FilePathDto> filePathList;
 
-	private String group;
+	private String groupId;
 	private String path;
 }
