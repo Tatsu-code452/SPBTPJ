@@ -41,7 +41,7 @@ public class BaseDao<T> {
 		boolean result = true;
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
-			objectMapper.writeValue(new File(FILE_NAME), t);
+			objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(FILE_NAME), t);
 		} catch (IOException e) {
 			e.printStackTrace();
 			result = false;

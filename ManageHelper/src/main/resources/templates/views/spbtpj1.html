@@ -11,17 +11,19 @@
 			<ul>
 				<li th:each="elmPath: ${elmGroup.pathList}"><a
 					th:href="@{'/spbtpj1/openFile?filename=' + ${elmPath.encodePath} + ''}"
-					th:text="${elmPath.path}"></a></li>
+					th:text="${elmPath.name}"></a></li>
 			</ul>
 		</details>
 	</div>
 
 	<div id="filePathAddWrap">
 		<form action="/spbtpj1/insert" method="post" th:object="${viewModel}">
-			<select id="groupId" name="groupId" th:field="*{groupId}">
+			<!-- <select id="groupId" name="groupId" th:field="*{groupId}">
 				<option th:each="entry : ${viewModel.filePathGroupMap}" th:value="${entry.key}"
 					th:text="${entry.value}"></option>
-			</select>
+			</select> -->
+			<input type="text" id="groupId" name="groupId" th:field="*{groupId}" />
+			<input type="text" id="name" name="name" th:field="*{name}" />
 			<input type="text" id="path" name="path" th:field="*{path}" />
 			<button type="submit">追加</button>
 		</form>

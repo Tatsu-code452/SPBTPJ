@@ -43,6 +43,7 @@ public class Spbtpj1Controller {
 	public String insert(Model model, @ModelAttribute Spbtpj1ViewModel viewModel) {
 		InsertBDto dto = new InsertBDto();
 		dto.setGroupId(viewModel.getGroupId());
+		dto.setName(viewModel.getName());
 		dto.setPath(viewModel.getPath());
 		insertService.execute(dto);
 		return Pages.PAGE_SPBTPJ1_REDIRECT;

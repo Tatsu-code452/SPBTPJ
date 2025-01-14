@@ -36,7 +36,7 @@ public class InsertLogic extends BaseLogic<InsertBDto> {
 		boolean result = true;
 
 		FilePathDto.FilePathInfoDto path = new FilePathDto.FilePathInfoDto();
-		path.setName(dto.getPath());
+		path.setName(dto.getName());
 		path.setPath(dto.getPath());
 		path.setEncodePath(URLEncoder.encode(dto.getPath(), StandardCharsets.UTF_8));
 		if (!filePathMap.containsKey(dto.getGroupId())) {

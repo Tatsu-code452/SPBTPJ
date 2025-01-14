@@ -13,5 +13,6 @@ public class Spbtpj1ViewModel {
 	private List<FilePathDto> filePathList;
 
 	private String groupId;
+	private String name;
 	private String path;
 }

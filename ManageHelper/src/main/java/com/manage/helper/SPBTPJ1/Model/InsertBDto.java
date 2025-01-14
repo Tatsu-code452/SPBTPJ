@@ -5,5 +5,6 @@ import lombok.Data;
 @Data
 public class InsertBDto {
 	private String groupId;
+	private String name;
 	private String path;
 }
