@@ -8,7 +8,7 @@ import com.manage.helper.Dao.DaoModel.FilePathDto;
 import lombok.Data;
 
 @Data
-public class Spbtpj1ViewModel {
+public class SPBTPJ1_ViewModel {
 	private Map<String, String> filePathGroupMap;
 	private List<FilePathDto> filePathList;
 

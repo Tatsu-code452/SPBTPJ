@@ -12,19 +12,19 @@ import org.springframework.stereotype.Component;
 import com.manage.helper.COMMON.BaseLogic;
 import com.manage.helper.Dao.FilePathDao;
 import com.manage.helper.Dao.DaoModel.FilePathDto;
-import com.manage.helper.SPBTPJ1.Model.InsertBDto;
+import com.manage.helper.SPBTPJ1.Model.SPBTPJ1_InsertBDto;
 
 import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class InsertLogic extends BaseLogic<InsertBDto> {
+public class SPBTPJ1_InsertLogic extends BaseLogic<SPBTPJ1_InsertBDto> {
 	private final FilePathDao filePathDao;
 
 	private Map<String, List<FilePathDto.FilePathInfoDto>> filePathMap;
 
 	@Override
-	protected boolean loadData(InsertBDto dto) {
+	protected boolean loadData(SPBTPJ1_InsertBDto dto) {
 		boolean result = true;
 		filePathMap = filePathDao.readAll().stream()
 				.collect(Collectors.toMap(FilePathDto::getGroupId, FilePathDto::getPathList));
@@ -32,7 +32,7 @@ public class InsertLogic extends BaseLogic<InsertBDto> {
 	}
 
 	@Override
-	protected boolean createData(InsertBDto dto) {
+	protected boolean createData(SPBTPJ1_InsertBDto dto) {
 		boolean result = true;
 
 		FilePathDto.FilePathInfoDto path = new FilePathDto.FilePathInfoDto();
@@ -48,7 +48,7 @@ public class InsertLogic extends BaseLogic<InsertBDto> {
 	}
 
 	@Override
-	protected boolean saveData(InsertBDto dto) {
+	protected boolean saveData(SPBTPJ1_InsertBDto dto) {
 		boolean result = true;
 		result = filePathDao.writeAll(filePathMap.entrySet().stream().sorted(Map.Entry.comparingByKey()).map(v -> {
 			FilePathDto workDto = new FilePathDto();

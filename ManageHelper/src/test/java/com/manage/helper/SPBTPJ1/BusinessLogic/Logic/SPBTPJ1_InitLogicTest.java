@@ -3,7 +3,7 @@ package com.manage.helper.SPBTPJ1.BusinessLogic.Logic;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class InitLogicTest {
+class SPBTPJ1_InitLogicTest {
 //	@InjectMocks
 //	private InitLogic logic;
 //

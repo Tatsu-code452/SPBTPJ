@@ -14,25 +14,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.manage.helper.COMMON.Pages;
-import com.manage.helper.SPBTPJ1.BusinessLogic.Service.InitService;
-import com.manage.helper.SPBTPJ1.BusinessLogic.Service.InsertService;
-import com.manage.helper.SPBTPJ1.Model.InitBDto;
-import com.manage.helper.SPBTPJ1.Model.InsertBDto;
-import com.manage.helper.SPBTPJ1.ViewModel.Spbtpj1ViewModel;
+import com.manage.helper.SPBTPJ1.BusinessLogic.Service.SPBTPJ1_InitService;
+import com.manage.helper.SPBTPJ1.BusinessLogic.Service.SPBTPJ1_InsertService;
+import com.manage.helper.SPBTPJ1.Model.SPBTPJ1_InitBDto;
+import com.manage.helper.SPBTPJ1.Model.SPBTPJ1_InsertBDto;
+import com.manage.helper.SPBTPJ1.ViewModel.SPBTPJ1_ViewModel;
 
 import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequestMapping("/spbtpj1")
 @RequiredArgsConstructor
-public class Spbtpj1Controller {
-	private final InitService initService;
-	private final InsertService insertService;
+public class SPBTPJ1_Controller {
+	private final SPBTPJ1_InitService initService;
+	private final SPBTPJ1_InsertService insertService;
 
 	@GetMapping("/init")
 	public String init(Model model) {
-		InitBDto dto = new InitBDto();
-		dto.setViewModel(new Spbtpj1ViewModel());
+		SPBTPJ1_InitBDto dto = new SPBTPJ1_InitBDto();
+		dto.setViewModel(new SPBTPJ1_ViewModel());
 		if (initService.execute(dto)) {
 			model.addAttribute("viewModel", dto.getViewModel());
 		}
@@ -40,8 +40,8 @@ public class Spbtpj1Controller {
 	}
 
 	@PostMapping("/insert")
-	public String insert(Model model, @ModelAttribute Spbtpj1ViewModel viewModel) {
-		InsertBDto dto = new InsertBDto();
+	public String insert(Model model, @ModelAttribute SPBTPJ1_ViewModel viewModel) {
+		SPBTPJ1_InsertBDto dto = new SPBTPJ1_InsertBDto();
 		dto.setGroupId(viewModel.getGroupId());
 		dto.setName(viewModel.getName());
 		dto.setPath(viewModel.getPath());
