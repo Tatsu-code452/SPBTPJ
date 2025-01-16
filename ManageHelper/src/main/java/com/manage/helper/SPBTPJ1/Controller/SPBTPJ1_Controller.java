@@ -1,7 +1,6 @@
 package com.manage.helper.SPBTPJ1.Controller;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,19 +49,18 @@ public class SPBTPJ1_Controller {
 	}
 
 	@GetMapping("/openFile")
-	public String openFile(@RequestParam("filename") String filename) {
+	public String openFile(String filename) {
 		try {
+			List<String> cmd = new ArrayList<String>();
+			cmd.add("cmd.exe");
+			cmd.add("/c");
+			cmd.add("start");
+			cmd.add("explorer");
 			File file = new File(filename);
-			if (file.exists()) {
-				List<String> cmd = new ArrayList<String>();
-				cmd.add("cmd.exe");
-				cmd.add("/c");
-				cmd.add("start");
-				cmd.add("explorer");
-				cmd.add(file.getPath());
-				Runtime.getRuntime().exec(cmd.stream().toArray(String[]::new));
-			}
-		} catch (IOException e) {
+			cmd.add(file.exists() ? file.getPath() : filename);
+			Runtime.getRuntime().exec(cmd.stream().toArray(String[]::new));
+
+		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
