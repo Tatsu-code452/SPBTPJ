@@ -1,6 +1,4 @@
-package com.manage.helper.Dao.DaoModel;
-
-import java.io.Serializable;
+package com.manage.helper.SPBTPJ1.Model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FilePathGroupDto implements Serializable {
-    private String groupId;
+public class SPBTPJ1_InsertGroupBDto {
     private String group;
 }

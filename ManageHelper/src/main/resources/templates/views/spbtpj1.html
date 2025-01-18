@@ -18,13 +18,19 @@
 
 	<div id="filePathAddWrap">
 		<form action="/spbtpj1/insert" method="post" th:object="${viewModel}">
-			<!-- <select id="groupId" name="groupId" th:field="*{groupId}">
-				<option th:each="entry : ${viewModel.filePathGroupMap}" th:value="${entry.key}"
-					th:text="${entry.value}"></option>
-			</select> -->
-			<input type="text" id="groupId" name="groupId" th:field="*{groupId}" />
-			<input type="text" id="name" name="name" th:field="*{name}" />
-			<input type="text" id="path" name="path" th:field="*{path}" />
+			<select id="groupId" name="groupId" th:field="*{groupId}">
+				<option th:each="entry : ${viewModel.filePathGroupMap}"
+					th:value="${entry.key}" th:text="${entry.value}"></option>
+			</select> <input type="text" id="name" name="name" th:field="*{name}" /> <input
+				type="text" id="path" name="path" th:field="*{path}" />
+			<button type="submit">追加</button>
+		</form>
+	</div>
+
+	<div id="fileGroupAddWrap">
+		<form action="/spbtpj1/insertGroup" method="post"
+			th:object="${viewModel}">
+			<input type="text" id="group" name="group" th:field="*{group}" />
 			<button type="submit">追加</button>
 		</form>
 	</div>

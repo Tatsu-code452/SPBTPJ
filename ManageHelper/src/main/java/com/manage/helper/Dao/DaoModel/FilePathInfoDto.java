@@ -1,8 +1,5 @@
 package com.manage.helper.Dao.DaoModel;
 
-import java.io.Serializable;
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FilePathDto implements Serializable {
-    private String groupId;
-    private List<FilePathInfoDto> pathList;
+public class FilePathInfoDto {
+    private String name;
+    private String path;
+    private String encodePath;
 }

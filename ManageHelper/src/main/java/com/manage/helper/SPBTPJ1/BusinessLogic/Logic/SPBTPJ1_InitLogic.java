@@ -21,8 +21,10 @@ public class SPBTPJ1_InitLogic extends BaseLogic<SPBTPJ1_InitBDto> {
 	@Override
 	protected boolean loadData(SPBTPJ1_InitBDto dto) {
 		boolean result = true;
-		dto.getViewModel().setFilePathGroupMap(filePathGroupDao.readAll().stream()
-				.collect(Collectors.toMap(FilePathGroupDto::getGroupId, FilePathGroupDto::getGroup)));
+		dto.getViewModel()
+				.setFilePathGroupMap(filePathGroupDao.readAll().stream()
+						.collect(Collectors.toMap(FilePathGroupDto::getGroupId,
+								FilePathGroupDto::getGroup)));
 		dto.getViewModel().setFilePathList(filePathDao.readAll());
 		return result;
 	}
