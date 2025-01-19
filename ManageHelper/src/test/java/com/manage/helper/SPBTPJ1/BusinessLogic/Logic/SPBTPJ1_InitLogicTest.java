@@ -46,10 +46,6 @@ class SPBTPJ1_InitLogicTest {
     private FilePathDaoTest filePathDaoTest;
     private FilePathGroupDaoTest filePathGroupDaoTest;
 
-    private Object object;
-
-    private Object object2;
-
     /**
      * @throws java.lang.Exception
      */
@@ -59,13 +55,20 @@ class SPBTPJ1_InitLogicTest {
         filePathGroupDaoTest = new FilePathGroupDaoTest();
         filePathDaoTest = new FilePathDaoTest();
 
-        Field field = SPBTPJ1_InitLogic.class.getDeclaredField("filePathGroupDao");
-        field.setAccessible(true);
-        field.set(logic, filePathGroupDao);
-        field = SPBTPJ1_InitLogic.class.getDeclaredField("filePathDao");
-        field.setAccessible(true);
-        field.set(logic, filePathDao);
+        Map<String, Object> fieldMap = new HashMap<String, Object>();
+        fieldMap.put("filePathGroupDao", filePathGroupDao);
+        fieldMap.put("filePathDao", filePathDao);
 
+        var mockedClass = SPBTPJ1_InitLogic.class;
+        fieldMap.entrySet().forEach(m -> {
+            try {
+                Field field = mockedClass.getDeclaredField(m.getKey());
+                field.setAccessible(true);
+                field.set(logic, m.getValue());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     /**
@@ -78,23 +81,20 @@ class SPBTPJ1_InitLogicTest {
 
     /**
      * {@link com.manage.helper.COMMON.BaseLogic#execute(java.lang.Object)} のためのテスト・メソッド。
-     * @throws SecurityException 
-     * @throws NoSuchFieldException 
-     * @throws IllegalAccessException 
-     * @throws IllegalArgumentException 
+     * @throws Exception 
      */
     @Test
     final void testExecute()
-            throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+            throws Exception {
         SPBTPJ1_InitBDto result = new SPBTPJ1_InitBDto();
         result.setViewModel(new SPBTPJ1_ViewModel());
 
-        when(filePathGroupDao.readAll()).thenReturn(filePathGroupDaoTest.createData2());
-        when(filePathDao.readAll()).thenReturn(filePathDaoTest.createData3());
+        when(filePathGroupDao.readAll()).thenReturn(filePathGroupDaoTest.createFilePathGroupDtoList());
+        when(filePathDao.readAll()).thenReturn(filePathDaoTest.createMultiFilePathDtoList());
         logic.execute(result);
 
         assertEquals(createFilePathGroupMap(), result.getViewModel().getFilePathGroupMap());
-        assertEquals(filePathDaoTest.createData3(), result.getViewModel().getFilePathList());
+        assertEquals(filePathDaoTest.createMultiFilePathDtoList(), result.getViewModel().getFilePathList());
     }
 
     private Map<String, String> createFilePathGroupMap() {

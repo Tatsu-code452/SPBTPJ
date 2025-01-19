@@ -7,18 +7,17 @@ import com.manage.helper.Dao.DaoModel.FilePathGroupDto;
 
 public class FilePathGroupDaoTest {
 
-    public FilePathGroupDto createData1(Integer groupId) {
+    public FilePathGroupDto createFilePathGroupDto(Integer groupId) {
         String sGroupId = groupId.toString();
-
         return new FilePathGroupDto(sGroupId, "group" + sGroupId);
     }
 
-    public List<FilePathGroupDto> createData2() {
+    public List<FilePathGroupDto> createFilePathGroupDtoList() {
         List<FilePathGroupDto> result = new ArrayList<FilePathGroupDto>();
 
-        result.add(createData1(1));
-        result.add(createData1(2));
-        result.add(createData1(3));
+        result.add(createFilePathGroupDto(1));
+        result.add(createFilePathGroupDto(2));
+        result.add(createFilePathGroupDto(3));
 
         return result;
     }
