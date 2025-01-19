@@ -10,17 +10,13 @@ import com.manage.helper.COMMON.BaseDao;
 import com.manage.helper.COMMON.CommonConst;
 import com.manage.helper.Dao.DaoModel.FilePathDto;
 
-import jakarta.annotation.PostConstruct;
-
 @Component
 public class FilePathDao extends BaseDao<FilePathDto> {
-	@PostConstruct
-	public void setUp() {
-		super.setFileName(StringUtils.concat(CommonConst.FILE_PATH, CommonConst.FILE_NAME_FILE_PATH));
-		super.setTypeRef(new TypeReference<FilePathDto>() {
-		});
-		super.setTypeRefList(new TypeReference<List<FilePathDto>>() {
-		});
-	}
-
+    public FilePathDao() {
+        super(StringUtils.concat(CommonConst.FILE_PATH, CommonConst.FILE_NAME_FILE_PATH),
+                new TypeReference<FilePathDto>() {
+                },
+                new TypeReference<List<FilePathDto>>() {
+                });
+    }
 }
