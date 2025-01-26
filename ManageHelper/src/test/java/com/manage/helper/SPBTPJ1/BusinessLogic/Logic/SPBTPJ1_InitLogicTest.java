@@ -9,11 +9,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -33,30 +32,26 @@ import com.manage.helper.com.TestCommon;
 class SPBTPJ1_InitLogicTest extends TestCommon<SPBTPJ1_InitLogic> {
 
     @InjectMocks
-    private SPBTPJ1_InitLogic logic;
+    private SPBTPJ1_InitLogic instance;
 
-    private FilePathDaoDataProvider filePathDaoDataProvider = new FilePathDaoDataProvider();
-    private FilePathGroupDaoDataProvider filePathGroupDaoDataProvider = new FilePathGroupDaoDataProvider();
+    @InjectMocks
+    private FilePathDaoDataProvider filePathDaoDataProvider;
 
-    @Override
-    public void createMockFieldMap() {
-        super.fieldMap.put("filePathGroupDao", filePathGroupDaoDataProvider.getFilePathGroupDao());
-        super.fieldMap.put("filePathDao", filePathDaoDataProvider.getFilePathDao());
-    }
+    @InjectMocks
+    private FilePathGroupDaoDataProvider filePathGroupDaoDataProvider;
 
     /**
+     * コンストラクタ
      */
-    @BeforeEach
-    void setUp() {
-        super.setUp(logic);
-    }
-
-    /**
-     * @throws java.lang.Exception
-     */
-    @AfterEach
-    public void tearDown() throws Exception {
-        super.tearDown();
+    public SPBTPJ1_InitLogicTest() {
+        MockitoAnnotations.openMocks(this);
+        // テスト対象ロジック作成
+        super.testLogic = instance;
+        // 依存するモックインスタンスを登録
+        registerMock("filePathGroupDao",
+                filePathGroupDaoDataProvider.getFilePathGroupDao());
+        registerMock("filePathDao",
+                filePathDaoDataProvider.getFilePathDao());
     }
 
     /**
@@ -69,7 +64,7 @@ class SPBTPJ1_InitLogicTest extends TestCommon<SPBTPJ1_InitLogic> {
         SPBTPJ1_InitBDto result = new SPBTPJ1_InitBDto();
         result.setViewModel(new SPBTPJ1_ViewModel());
 
-        assertTrue(logic.execute(result));
+        assertTrue(testLogic.execute(result));
         assertEquals(expectedFilePathGroupMap(), result.getViewModel().getFilePathGroupMap());
         assertEquals(expectedFilePathList(), result.getViewModel().getFilePathList());
     }

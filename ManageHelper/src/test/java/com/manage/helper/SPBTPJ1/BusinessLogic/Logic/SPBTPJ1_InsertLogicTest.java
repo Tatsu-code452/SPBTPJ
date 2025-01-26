@@ -10,12 +10,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -35,29 +34,21 @@ import com.manage.helper.com.TestCommon;
 class SPBTPJ1_InsertLogicTest extends TestCommon<SPBTPJ1_InsertLogic> {
 
     @InjectMocks
-    private SPBTPJ1_InsertLogic logic;
+    private SPBTPJ1_InsertLogic instance;
 
-    private FilePathDaoDataProvider filePathDaoDataProvider = new FilePathDaoDataProvider();
-
-    @Override
-    public void createMockFieldMap() {
-        super.fieldMap.put("filePathDao", filePathDaoDataProvider.getFilePathDao());
-    }
+    @InjectMocks
+    private FilePathDaoDataProvider filePathDaoDataProvider;
 
     /**
-     * @throws java.lang.Exception
+     * コンストラクタ
      */
-    @BeforeEach
-    void setUp() throws Exception {
-        super.setUp(logic);
-    }
-
-    /**
-     * @throws java.lang.Exception
-     */
-    @AfterEach
-    public void tearDown() throws Exception {
-        super.tearDown();
+    public SPBTPJ1_InsertLogicTest() {
+        MockitoAnnotations.openMocks(this);
+        // テスト対象ロジック作成
+        super.testLogic = instance;
+        // 依存するモックインスタンスを登録
+        registerMock("filePathDao",
+                filePathDaoDataProvider.getFilePathDao());
     }
 
     /**
@@ -71,8 +62,8 @@ class SPBTPJ1_InsertLogicTest extends TestCommon<SPBTPJ1_InsertLogic> {
     final void testLoadDataSPBTPJ1_InsertBDto() throws Exception {
         SPBTPJ1_InsertBDto input = new SPBTPJ1_InsertBDto();
 
-        assertTrue(logic.loadData(input));
-        assertEquals(expectedFilePathList(), getField(logic, "filePathList"));
+        assertTrue(testLogic.loadData(input));
+        assertEquals(expectedFilePathList(), getField("filePathList"));
     }
 
     /**
@@ -85,8 +76,8 @@ class SPBTPJ1_InsertLogicTest extends TestCommon<SPBTPJ1_InsertLogic> {
         // TODO Stringソートのため、1-100-2-200の順となる
         testLoadDataSPBTPJ1_InsertBDto();
 
-        assertTrue(logic.createData(input));
-        assertEquals(expectedFilePathListAdded(input), getField(logic, "filePathList"));
+        assertTrue(testLogic.createData(input));
+        assertEquals(expectedFilePathListAdded(input), getField("filePathList"));
     }
 
     /**
@@ -98,7 +89,7 @@ class SPBTPJ1_InsertLogicTest extends TestCommon<SPBTPJ1_InsertLogic> {
         SPBTPJ1_InsertBDto input = new SPBTPJ1_InsertBDto("4", "testName", "testPath\\path\\テスト");
         testLoadDataSPBTPJ1_InsertBDto();
         testCreateDataSPBTPJ1_InsertBDto();
-        assertTrue(logic.saveData(input));
+        assertTrue(testLogic.saveData(input));
     }
 
     /**
@@ -107,7 +98,7 @@ class SPBTPJ1_InsertLogicTest extends TestCommon<SPBTPJ1_InsertLogic> {
     @Test
     final void testExecute() {
         SPBTPJ1_InsertBDto input = new SPBTPJ1_InsertBDto("4", "testName", "testPath\\path\\テスト");
-        assertTrue(logic.execute(input));
+        assertTrue(testLogic.execute(input));
     }
 
     private List<FilePathDto> expectedFilePathList() {

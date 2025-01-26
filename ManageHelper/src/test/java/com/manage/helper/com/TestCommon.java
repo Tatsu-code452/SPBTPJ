@@ -4,47 +4,54 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 public abstract class TestCommon<T> {
     protected AutoCloseable closeable;
-    protected Map<String, Object> fieldMap = new HashMap<String, Object>();
+    protected Map<String, Object> mockFieldMap = new HashMap<String, Object>();
     protected boolean isSetup = false;
+    protected T testLogic;
 
-    public void setUp(T logic) {
+    @BeforeEach
+    public void setUp() {
         if (isSetup) {
             return;
         }
-
         closeable = MockitoAnnotations.openMocks(this);
 
-        var mockedClass = logic.getClass();
-        createMockFieldMap();
-        fieldMap.entrySet().forEach(m -> {
-            try {
-                Field field = mockedClass.getDeclaredField(m.getKey());
-                field.setAccessible(true);
-                field.set(logic, m.getValue());
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+        initMocks();
         isSetup = true;
     }
 
-    public void createMockFieldMap() {
-
-    }
-
+    @AfterEach
     public void tearDown() throws Exception {
         closeable.close();
     }
 
-    public Object getField(T logic, String fieldName)
-            throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-        Field field = logic.getClass().getDeclaredField(fieldName);
+    protected void initMocks() {
+        for (var entry : mockFieldMap.entrySet()) {
+            try {
+                Field field = testLogic.getClass().getDeclaredField(entry.getKey());
+                field.setAccessible(true);
+                field.set(testLogic, entry.getValue());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    protected void registerMock(String fieldName, Object mockInstance) {
+        mockFieldMap.put(fieldName, mockInstance);
+    }
+
+    public Object getField(String fieldName) throws Exception {
+        Field field = testLogic.getClass().getDeclaredField(fieldName);
         field.setAccessible(true);
-        return field.get(logic);
+        return field.get(testLogic);
     }
 }
