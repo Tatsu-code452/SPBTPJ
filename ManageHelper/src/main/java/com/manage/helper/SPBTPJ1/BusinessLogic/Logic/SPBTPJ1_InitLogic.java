@@ -1,5 +1,7 @@
 package com.manage.helper.SPBTPJ1.BusinessLogic.Logic;
 
+import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,8 +38,11 @@ public class SPBTPJ1_InitLogic extends BaseLogic<SPBTPJ1_InitBDto> {
         boolean result = true;
         dto.getViewModel()
                 .setFilePathGroupMap(filePathGroupList.stream()
+                        .sorted(Comparator.comparing(FilePathGroupDto::getOrder,
+                                Comparator.nullsLast(Comparator.naturalOrder())))
                         .collect(Collectors.toMap(FilePathGroupDto::getGroupId,
-                                FilePathGroupDto::getGroup)));
+                                FilePathGroupDto::getGroup, (e1, e2) -> e1,
+                                LinkedHashMap::new)));
         dto.getViewModel().setFilePathList(filePathList);
         return result;
     }

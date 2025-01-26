@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class FilePathGroupDto implements Serializable {
     private String groupId;
     private String group;
+    private Integer order;
 }

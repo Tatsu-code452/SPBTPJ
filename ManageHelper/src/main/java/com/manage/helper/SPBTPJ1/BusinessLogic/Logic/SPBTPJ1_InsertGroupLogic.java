@@ -33,7 +33,7 @@ public class SPBTPJ1_InsertGroupLogic extends BaseLogic<SPBTPJ1_InsertGroupBDto>
     protected boolean createData(SPBTPJ1_InsertGroupBDto dto) {
         boolean result = true;
         filePathGroupList.add(
-                new FilePathGroupDto(getGroupId(), dto.getGroup()));
+                new FilePathGroupDto(getGroupId(), dto.getGroup(), filePathGroupList.size() + 1));
         filePathGroupList = filePathGroupList.stream()
                 .sorted(Comparator.comparing(FilePathGroupDto::getGroupId)).collect(Collectors.toList());
         return result;

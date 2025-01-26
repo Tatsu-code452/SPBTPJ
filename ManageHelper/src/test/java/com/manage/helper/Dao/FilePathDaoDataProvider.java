@@ -6,14 +6,30 @@ package com.manage.helper.Dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
 import com.manage.helper.Dao.DaoModel.FilePathDto;
 import com.manage.helper.Dao.DaoModel.FilePathInfoDto;
+
+import lombok.Data;
 
 /**
  * @author Owner
  *
  */
-public class FilePathDaoTest {
+@Data
+public class FilePathDaoDataProvider {
+    @Mock
+    private FilePathDao filePathDao;
+
+    public FilePathDaoDataProvider() {
+        MockitoAnnotations.openMocks(this);
+    }
+
+    public List<FilePathDto> readAll() {
+        return filePathDao.readAll();
+    }
 
     public FilePathInfoDto createFilePathInfoDto(Integer ren) {
         String sRen = ren.toString();
