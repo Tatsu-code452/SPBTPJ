@@ -9,11 +9,17 @@ import org.mockito.MockitoAnnotations;
 public abstract class TestCommon<T> {
     protected AutoCloseable closeable;
     protected Map<String, Object> fieldMap = new HashMap<String, Object>();
+    protected boolean isSetup = false;
 
     public void setUp(T logic) {
+        if (isSetup) {
+            return;
+        }
+
         closeable = MockitoAnnotations.openMocks(this);
 
         var mockedClass = logic.getClass();
+        createMockFieldMap();
         fieldMap.entrySet().forEach(m -> {
             try {
                 Field field = mockedClass.getDeclaredField(m.getKey());
@@ -24,6 +30,11 @@ public abstract class TestCommon<T> {
                 e.printStackTrace();
             }
         });
+        isSetup = true;
+    }
+
+    public void createMockFieldMap() {
+
     }
 
     public void tearDown() throws Exception {

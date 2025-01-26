@@ -1,5 +1,8 @@
 package com.manage.helper.Dao;
 
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,10 +25,10 @@ public class FilePathGroupDaoDataProvider {
 
     public FilePathGroupDaoDataProvider() {
         MockitoAnnotations.openMocks(this);
-    }
-
-    public List<FilePathGroupDto> readAll() {
-        return filePathGroupDao.readAll();
+        when(filePathGroupDao.readAll())
+                .thenReturn(createFilePathGroupDtoList());
+        when(filePathGroupDao.writeAll(anyList()))
+                .thenReturn(true);
     }
 
     public FilePathGroupDto createFilePathGroupDto(Integer groupId) {

@@ -4,7 +4,6 @@
 package com.manage.helper.SPBTPJ1.BusinessLogic.Logic;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -39,12 +38,16 @@ class SPBTPJ1_InitLogicTest extends TestCommon<SPBTPJ1_InitLogic> {
     private FilePathDaoDataProvider filePathDaoDataProvider = new FilePathDaoDataProvider();
     private FilePathGroupDaoDataProvider filePathGroupDaoDataProvider = new FilePathGroupDaoDataProvider();
 
+    @Override
+    public void createMockFieldMap() {
+        super.fieldMap.put("filePathGroupDao", filePathGroupDaoDataProvider.getFilePathGroupDao());
+        super.fieldMap.put("filePathDao", filePathDaoDataProvider.getFilePathDao());
+    }
+
     /**
      */
     @BeforeEach
     void setUp() {
-        super.fieldMap.put("filePathGroupDao", filePathGroupDaoDataProvider.getFilePathGroupDao());
-        super.fieldMap.put("filePathDao", filePathDaoDataProvider.getFilePathDao());
         super.setUp(logic);
     }
 
@@ -65,11 +68,6 @@ class SPBTPJ1_InitLogicTest extends TestCommon<SPBTPJ1_InitLogic> {
             throws Exception {
         SPBTPJ1_InitBDto result = new SPBTPJ1_InitBDto();
         result.setViewModel(new SPBTPJ1_ViewModel());
-
-        when(filePathGroupDaoDataProvider.readAll())
-                .thenReturn(filePathGroupDaoDataProvider.createFilePathGroupDtoList());
-        when(filePathDaoDataProvider.readAll())
-                .thenReturn(filePathDaoDataProvider.createMultiFilePathDtoList());
 
         assertTrue(logic.execute(result));
         assertEquals(expectedFilePathGroupMap(), result.getViewModel().getFilePathGroupMap());

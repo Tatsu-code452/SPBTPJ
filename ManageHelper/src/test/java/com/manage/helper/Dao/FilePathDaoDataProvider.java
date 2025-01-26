@@ -3,6 +3,9 @@
  */
 package com.manage.helper.Dao;
 
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,10 +28,10 @@ public class FilePathDaoDataProvider {
 
     public FilePathDaoDataProvider() {
         MockitoAnnotations.openMocks(this);
-    }
-
-    public List<FilePathDto> readAll() {
-        return filePathDao.readAll();
+        when(filePathDao.readAll())
+                .thenReturn(createMultiFilePathDtoList());
+        when(filePathDao.writeAll(anyList()))
+                .thenReturn(true);
     }
 
     public FilePathInfoDto createFilePathInfoDto(Integer ren) {
