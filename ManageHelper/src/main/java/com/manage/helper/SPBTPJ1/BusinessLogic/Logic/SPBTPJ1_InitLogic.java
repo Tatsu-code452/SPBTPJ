@@ -1,10 +1,8 @@
 package com.manage.helper.SPBTPJ1.BusinessLogic.Logic;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
@@ -47,11 +45,16 @@ public class SPBTPJ1_InitLogic extends BaseLogic<SPBTPJ1_InitBDto> {
 
 		List<String> orderedGroupIdList = dto.getViewModel().getFilePathGroupMap().keySet().stream()
 				.collect(Collectors.toList());
-		dto.getViewModel().setFilePathList(
-				filePathList.stream().sorted((n1, n2) -> Integer.compare(orderedGroupIdList.indexOf(n1.getGroupId()),
-						orderedGroupIdList.indexOf(n2.getGroupId()))).collect(Collectors.toList()));
+
+		dto.getViewModel().setFilePathList(filePathList.stream()
+				.sorted((n1, n2) -> comparator(orderedGroupIdList, n1, n2)).collect(Collectors.toList()));
 
 		return result;
+	}
+
+	private int comparator(List<String> orderedGroupIdList, FilePathDto n1, FilePathDto n2) {
+		return Integer.compare(orderedGroupIdList.indexOf(n1.getGroupId()),
+				orderedGroupIdList.indexOf(n2.getGroupId()));
 	}
 
 }
