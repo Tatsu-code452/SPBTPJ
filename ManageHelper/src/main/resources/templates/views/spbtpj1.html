@@ -1,37 +1,46 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="stylesheet" th:href="@{/css/SPBTPJ1.css}">
+
 <title>ファイルリスト</title>
 </head>
-<body>
-	<div id="filePathListWrap">
+<body class="container">
+
+	<div id="filePathListWrap" class="custom-div-with-border">
+		<span>ショートカット一覧</span>
 		<details th:each="elmGroup: ${viewModel.filePathList}">
 			<summary
 				th:text="${viewModel.filePathGroupMap.get(elmGroup.groupId)}"></summary>
 			<ul>
-				<li th:each="elmPath: ${elmGroup.pathList}"><a
-					th:href="@{'/spbtpj1/openFile?filename=' + ${elmPath.encodePath} + ''}"
-					th:text="${elmPath.name}"></a></li>
+				<li th:each="elmPath: ${elmGroup.pathList}">
+					<a th:href="@{'/spbtpj1/openFile?filename=' + ${elmPath.encodePath} + ''}"
+					th:text="${elmPath.name}"></a>
+				</li>
 			</ul>
 		</details>
 	</div>
 
-	<div id="filePathAddWrap">
+	<div id="filePathAddWrap" class="custom-div-with-border">
+		<span>ショートカット追加</span>
 		<form action="/spbtpj1/insert" method="post" th:object="${viewModel}">
-			<select id="groupId" name="groupId" th:field="*{groupId}">
+			<select id="groupId" name="groupId" th:field="*{groupId}" class="form-select-sm">
 				<option th:each="entry : ${viewModel.filePathGroupMap}"
 					th:value="${entry.key}" th:text="${entry.value}"></option>
-			</select> <input type="text" id="name" name="name" th:field="*{name}" /> <input
-				type="text" id="path" name="path" th:field="*{path}" />
-			<button type="submit">追加</button>
+			</select> 
+			<input type="text" id="name" name="name" th:field="*{name}" class="form-control-sm" />
+			<input type="text" id="path" name="path" th:field="*{path}" class="form-control-sm" />
+			<button type="submit" class="custom-btn">ショートカット追加</button>
 		</form>
 	</div>
 
-	<div id="fileGroupAddWrap">
-		<form action="/spbtpj1/insertGroup" method="post"
-			th:object="${viewModel}">
-			<input type="text" id="group" name="group" th:field="*{group}" />
-			<button type="submit">追加</button>
+	<div id="fileGroupAddWrap" class="custom-div-with-border">
+		<span>グループ追加</span>
+		<form action="/spbtpj1/insertGroup" method="post" th:object="${viewModel}">
+			<input type="text" id="group" name="group" th:field="*{group}" 	class="form-control-sm" />
+			<button type="submit" class="custom-btn">グループ追加</button>
 		</form>
 	</div>
 </body>
