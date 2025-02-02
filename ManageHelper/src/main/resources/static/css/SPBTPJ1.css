@@ -7313,7 +7313,7 @@ textarea.form-control-lg {
   position: static !important;
 }
 
-.position-relative {
+.position-relative, .custom-div-with-border span {
   position: relative !important;
 }
 
@@ -7889,7 +7889,7 @@ textarea.form-control-lg {
   margin-top: 0 !important;
 }
 
-.mt-1, .custom-div-with-border {
+.mt-1 {
   margin-top: 0.25rem !important;
 }
 
@@ -7897,7 +7897,7 @@ textarea.form-control-lg {
   margin-top: 0.5rem !important;
 }
 
-.mt-3 {
+.mt-3, .custom-div-with-border {
   margin-top: 1rem !important;
 }
 
@@ -8093,7 +8093,7 @@ textarea.form-control-lg {
   padding-top: 0.5rem !important;
 }
 
-.pt-3 {
+.pt-3, .custom-div-with-border {
   padding-top: 1rem !important;
 }
 
@@ -8269,7 +8269,7 @@ textarea.form-control-lg {
   font-size: calc(1.275rem + 0.3vw) !important;
 }
 
-.fs-5 {
+.fs-5, .custom-div-with-border span {
   font-size: 1.25rem !important;
 }
 
@@ -8305,7 +8305,7 @@ textarea.form-control-lg {
   font-weight: 600 !important;
 }
 
-.fw-bold {
+.fw-bold, .custom-div-with-border span {
   font-weight: 700 !important;
 }
 
@@ -8720,7 +8720,7 @@ textarea.form-control-lg {
   background-color: rgba(var(--bs-black-rgb), var(--bs-bg-opacity)) !important;
 }
 
-.bg-white {
+.bg-white, .custom-div-with-border span {
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-white-rgb), var(--bs-bg-opacity)) !important;
 }
@@ -10166,7 +10166,7 @@ textarea.form-control-lg {
   }
 }
 @media (min-width: 992px) {
-  .float-lg-start {
+  .float-lg-start, .custom-div-with-border span {
     float: left !important;
   }
   .float-lg-end {
@@ -11863,6 +11863,10 @@ textarea.form-control-lg {
   .d-print-none {
     display: none !important;
   }
+}
+.custom-div-with-border span {
+  top: -2rem;
+  margin-bottom: -2.5rem;
 }
 
 /*# sourceMappingURL=SPBTPJ1.css.map */
