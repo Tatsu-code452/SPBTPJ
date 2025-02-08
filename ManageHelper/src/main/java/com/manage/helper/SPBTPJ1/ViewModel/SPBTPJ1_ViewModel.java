@@ -3,7 +3,7 @@ package com.manage.helper.SPBTPJ1.ViewModel;
 import java.util.List;
 import java.util.Map;
 
-import com.manage.helper.Dao.DaoModel.FilePathDto;
+import com.manage.helper.DAO.DaoModel.FilePathDto;
 
 import lombok.Data;
 

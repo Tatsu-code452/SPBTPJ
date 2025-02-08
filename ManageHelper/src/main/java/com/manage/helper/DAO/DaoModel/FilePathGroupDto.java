@@ -1,4 +1,4 @@
-package com.manage.helper.Dao.DaoModel;
+package com.manage.helper.DAO.DaoModel;
 
 import java.io.Serializable;
 
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FilePathGroupDto implements Serializable {
-    private String groupId;
-    private String group;
-    private Integer order;
+	private String groupId;
+	private String group;
+	private Integer order;
 }
