@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="stylesheet" th:href="@{/css/COMMON.css}">
+<script type="text/javascript" th:src="@{/js/SPBTPJ2.js}"></script>
+
+<title>グループリスト</title>
+</head>
+<body class="container">
+	<div id="fileGroupWrap" class="custom-div-with-border">
+		<span>グループ</span>
+		<form action="/spbtpj2/update" method="post" th:object="${viewModel}">
+			<table class="custom-table">
+				<thead>
+					<tr>
+						<th>削除</th>
+						<th>順番</th>
+						<th>グループID</th>
+						<th>グループ名</th>
+					</tr>
+				</thead>
+				<tbody class="table-group-divider draggableWrap">
+					<tr th:each="elmGroup, st: ${viewModel.filePathGroupList}"
+						draggable="true" class="draggableRow">
+						<td><input type="checkbox"
+								th:field="*{inputGroupList[__${st.index}__].checked}" /></td>
+						<td th:text="${elmGroup.order}"></td>
+						<td th:text="${elmGroup.groupId}"></td>
+						<td th:text="${elmGroup.group}"></td>
+						<td th:hidden="hidden"><input type="text" class="input-order"
+								th:field="*{inputGroupList[__${st.index}__].order}" /></td>
+						<td th:hidden="hidden"><input type="text"
+								th:field="*{inputGroupList[__${st.index}__].preOrder}" /></td>
+					</tr>
+				</tbody>
+			</table>
+			<button type="submit" class="custom-btn">反映</button>
+		</form>
+	</div>
+</body>
+</html>
