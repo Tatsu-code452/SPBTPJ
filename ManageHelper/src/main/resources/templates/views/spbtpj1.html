@@ -14,9 +14,9 @@
 		<details th:each="elmGroup: ${viewModel.filePathList}">
 			<summary
 				th:text="${viewModel.filePathGroupMap.get(elmGroup.groupId)}"></summary>
-			<ul>
+			<ul class="draggableUl">
 				<li th:each="elmPath: ${elmGroup.pathList}">
-					<a
+					<a th:class="draggableA"
 						th:href="@{'/spbtpj1/openFile?filename=' + ${elmPath.encodePath} + ''}"
 						th:text="${elmPath.name}"></a>
 				</li>
