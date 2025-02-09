@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.manage.helper.COMMON.Pages;
 import com.manage.helper.SPBTPJ2.BusinessLogic.Service.SPBTPJ2_InitService;
+import com.manage.helper.SPBTPJ2.BusinessLogic.Service.SPBTPJ2_UpdateService;
 import com.manage.helper.SPBTPJ2.Model.SPBTPJ2_InitBDto;
+import com.manage.helper.SPBTPJ2.Model.SPBTPJ2_UpdateBDto;
 import com.manage.helper.SPBTPJ2.ViewModel.SPBTPJ2_ViewModel;
 
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SPBTPJ2_Controller {
 	private final SPBTPJ2_InitService initService;
+	private final SPBTPJ2_UpdateService updateService;
 
 	@GetMapping("/init")
 	public String init(Model model) {
@@ -32,6 +35,8 @@ public class SPBTPJ2_Controller {
 
 	@PostMapping("/update")
 	public String insert(Model model, @ModelAttribute SPBTPJ2_ViewModel viewModel) {
+		SPBTPJ2_UpdateBDto dto = new SPBTPJ2_UpdateBDto(viewModel.getInputGroupList());
+		updateService.execute(dto);
 		return Pages.PAGE_SPBTPJ1_REDIRECT;
 	}
 

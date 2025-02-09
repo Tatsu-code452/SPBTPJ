@@ -35,8 +35,10 @@ public class SPBTPJ2_InitLogic extends BaseLogic<SPBTPJ2_InitBDto> {
 				.setFilePathGroupList(filePathGroupList.stream()
 						.sorted(ComparatorUtils.comparingNaturalOrderNullsLast(FilePathGroupDto::getOrder))
 						.collect(Collectors.toList()));
-		dto.getViewModel().setInputGroupList(dto.getViewModel().getFilePathGroupList().stream()
-				.map(n -> new SPBTPJ2_TableInputData(false, n.getOrder(), n.getOrder())).collect(Collectors.toList()));
+		dto.getViewModel()
+				.setInputGroupList(dto.getViewModel().getFilePathGroupList().stream()
+						.map(n -> new SPBTPJ2_TableInputData(false, n.getOrder(), n.getGroupId()))
+						.collect(Collectors.toList()));
 		return result;
 	}
 }

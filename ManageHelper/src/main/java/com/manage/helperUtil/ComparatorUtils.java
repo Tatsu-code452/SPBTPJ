@@ -8,19 +8,23 @@ import java.util.function.Function;
  * 
  * @author Owner
  *
- * @param  <T> the type of element to be compared
- * @param  <U> the type of the sort key
+ * @param <T> the type of element to be compared
+ * @param <U> the type of the sort key
  */
-public interface ComparatorUtils<D, T, U> extends Comparator<T> {
+public class ComparatorUtils<T, U> implements Comparator<T> {
 
-    public static <T, U extends Comparable<U>> Comparator<T> comparingNaturalOrderNullsLast(
-            Function<T, U> keyExtractor) {
-        return Comparator.comparing(keyExtractor, Comparator.nullsLast(Comparator.naturalOrder()));
-    }
+	public static <T, U extends Comparable<U>> Comparator<T> comparingNaturalOrderNullsLast(
+			Function<T, U> keyExtractor) {
+		return Comparator.comparing(keyExtractor, Comparator.nullsLast(Comparator.naturalOrder()));
+	}
 
-    public static <U> int comparingByOrderdList(List<U> orderdList, U n1, U n2) {
-        return Integer.compare(orderdList.indexOf(n1),
-                orderdList.indexOf(n2));
-    }
+	public static <U> int comparingByOrderdList(List<U> orderdList, U n1, U n2) {
+		return Integer.compare(orderdList.indexOf(n1), orderdList.indexOf(n2));
+	}
+
+	@Override
+	public int compare(T o1, T o2) {
+		return 0;
+	}
 
 }

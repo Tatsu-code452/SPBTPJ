@@ -41,12 +41,15 @@
 	</div>
 
 	<div id="fileGroupAddWrap" class="custom-div-with-border">
-		<span>グループ追加</span>
+		<span>グループ関連</span>
 		<form action="/spbtpj1/insertGroup" method="post"
 			th:object="${viewModel}">
 			<input type="text" id="group" name="group" th:field="*{group}"
 				class="form-control-sm" />
 			<button type="submit" class="custom-btn">グループ追加</button>
+		</form>
+		<form action="/spbtpj1/redirect_spbtpj2" method="post">
+			<button type="submit" class="custom-btn">グループ順変更</button>
 		</form>
 	</div>
 </body>

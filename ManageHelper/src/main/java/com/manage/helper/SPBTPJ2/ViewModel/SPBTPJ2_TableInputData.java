@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class SPBTPJ2_TableInputData {
 	private boolean checked;
 	private Integer order;
-	private Integer preOrder;
+	private String groupId;
 }
