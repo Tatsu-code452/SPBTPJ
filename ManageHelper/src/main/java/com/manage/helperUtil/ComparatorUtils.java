@@ -9,10 +9,10 @@ import java.util.function.Function;
  * @author Owner
  *
  * @param <T> the type of element to be compared
- * @param <U> the type of the sort key
  */
-public class ComparatorUtils<T, U> implements Comparator<T> {
+public class ComparatorUtils<T> implements Comparator<T> {
 
+	// 指定キーを昇順、かつ、nullを最後にしてソート
 	public static <T, U extends Comparable<U>> Comparator<T> comparingNaturalOrderNullsLast(
 			Function<T, U> keyExtractor) {
 		return Comparator.comparing(keyExtractor, Comparator.nullsLast(Comparator.naturalOrder()));
