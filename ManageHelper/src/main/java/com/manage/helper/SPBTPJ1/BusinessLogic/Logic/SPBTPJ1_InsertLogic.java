@@ -26,32 +26,34 @@ public class SPBTPJ1_InsertLogic extends BaseLogic<SPBTPJ1_InsertBDto> {
 
 	@Override
 	protected boolean loadData(SPBTPJ1_InsertBDto dto) {
-		boolean result = true;
 		filePathList = filePathDao.readAll();
-		return result;
+		return true;
 	}
 
 	@Override
 	protected boolean createData(SPBTPJ1_InsertBDto dto) {
-		boolean result = true;
-
-		Map<String, List<FilePathInfoDto>> filePathMap = filePathList.stream()
-				.collect(Collectors.toMap(FilePathDto::getGroupId, FilePathDto::getPathList));
-		FilePathInfoDto path = new FilePathInfoDto(dto.getName(), dto.getPath(),
-				URLEncoder.encode(dto.getPath(), StandardCharsets.UTF_8));
-		if (!filePathMap.containsKey(dto.getGroupId())) {
-			filePathMap.put(dto.getGroupId(), new ArrayList<FilePathInfoDto>());
-		}
-		filePathMap.get(dto.getGroupId()).add(path);
-		filePathList = filePathMap.entrySet().stream().sorted(Map.Entry.comparingByKey())
-				.map(v -> new FilePathDto(v.getKey(), v.getValue())).collect(Collectors.toList());
-		return result;
+		setFilePathListToSave(addFilePathMap(dto, createFilePathMap()));
+		return true;
 	}
 
 	@Override
 	protected boolean saveData(SPBTPJ1_InsertBDto dto) {
-		boolean result = true;
-		result = filePathDao.writeAll(filePathList);
-		return result;
+		return filePathDao.writeAll(filePathList);
+	}
+
+	private Map<String, List<FilePathInfoDto>> createFilePathMap() {
+		return filePathList.stream().collect(Collectors.toMap(FilePathDto::getGroupId, FilePathDto::getPathList));
+	}
+
+	private Map<String, List<FilePathInfoDto>> addFilePathMap(SPBTPJ1_InsertBDto dto,
+			Map<String, List<FilePathInfoDto>> filePathMap) {
+		filePathMap.computeIfAbsent(dto.getGroupId(), k -> new ArrayList<>()).add(new FilePathInfoDto(dto.getName(),
+				dto.getPath(), URLEncoder.encode(dto.getPath(), StandardCharsets.UTF_8)));
+		return filePathMap;
+	}
+
+	private void setFilePathListToSave(Map<String, List<FilePathInfoDto>> filePathMap) {
+		filePathList = filePathMap.entrySet().stream().sorted(Map.Entry.comparingByKey())
+				.map(v -> new FilePathDto(v.getKey(), v.getValue())).collect(Collectors.toList());
 	}
 }

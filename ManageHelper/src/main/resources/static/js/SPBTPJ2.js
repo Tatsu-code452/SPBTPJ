@@ -1,6 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
 	document.querySelectorAll('.draggableRow').forEach(item => {
 		addEvents(item, draggableEvents);
+		setDispToInput(
+			item.querySelector(".disp-groupId"),
+			item.querySelector('.input-groupId'));
+		setDispToInput(
+			item.querySelector(".disp-order"),
+			item.querySelector('.input-order'));
 	});
 });
 
@@ -9,6 +15,10 @@ function addEvents(element, events) {
 		element.addEventListener(event, handler);
 	});
 };
+
+function setDispToInput(source, distination) {
+	distination.value = source.textContent;
+}
 
 const draggableEvents = {
 	dragstart: (e) => {

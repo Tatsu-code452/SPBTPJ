@@ -9,7 +9,6 @@ import com.manage.helper.COMMON.BaseLogic;
 import com.manage.helper.DAO.FilePathGroupDao;
 import com.manage.helper.DAO.DaoModel.FilePathGroupDto;
 import com.manage.helper.SPBTPJ2.Model.SPBTPJ2_InitBDto;
-import com.manage.helper.SPBTPJ2.ViewModel.SPBTPJ2_TableInputData;
 import com.manage.helperUtil.ComparatorUtils;
 
 import lombok.RequiredArgsConstructor;
@@ -23,22 +22,19 @@ public class SPBTPJ2_InitLogic extends BaseLogic<SPBTPJ2_InitBDto> {
 
 	@Override
 	protected boolean loadData(SPBTPJ2_InitBDto dto) {
-		boolean result = true;
 		filePathGroupList = filePathGroupDao.readAll();
-		return result;
+		return true;
 	}
 
 	@Override
 	protected boolean createResponse(SPBTPJ2_InitBDto dto) {
-		boolean result = true;
-		dto.getViewModel()
-				.setFilePathGroupList(filePathGroupList.stream()
-						.sorted(ComparatorUtils.comparingNaturalOrderNullsLast(FilePathGroupDto::getOrder))
-						.collect(Collectors.toList()));
-		dto.getViewModel()
-				.setInputGroupList(dto.getViewModel().getFilePathGroupList().stream()
-						.map(n -> new SPBTPJ2_TableInputData(false, n.getOrder(), n.getGroupId()))
-						.collect(Collectors.toList()));
-		return result;
+		dto.getViewModel().setFilePathGroupList(createFilePathGroupList());
+		return true;
+	}
+
+	private List<FilePathGroupDto> createFilePathGroupList() {
+		return filePathGroupList.stream()
+				.sorted(ComparatorUtils.comparingNaturalOrderNullsLast(FilePathGroupDto::getOrder))
+				.collect(Collectors.toList());
 	}
 }

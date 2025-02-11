@@ -1,6 +1,7 @@
 package com.manage.helper.SPBTPJ1.BusinessLogic.Logic;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
@@ -27,26 +28,29 @@ public class SPBTPJ1_InitLogic extends BaseLogic<SPBTPJ1_InitBDto> {
 
 	@Override
 	protected boolean loadData(SPBTPJ1_InitBDto dto) {
-		boolean result = true;
 		filePathGroupList = filePathGroupDao.readAll();
 		filePathList = filePathDao.readAll();
-		return result;
+		return true;
 	}
 
 	@Override
 	protected boolean createResponse(SPBTPJ1_InitBDto dto) {
-		boolean result = true;
-		dto.getViewModel().setFilePathGroupMap(filePathGroupList.stream()
+		dto.getViewModel().setFilePathGroupMap(createFilePathGroupMap());
+		dto.getViewModel().setFilePathList(createFilePathList(dto.getViewModel().getFilePathGroupMap()));
+		return true;
+	}
+
+	private Map<String, String> createFilePathGroupMap() {
+		return filePathGroupList.stream()
 				.sorted(ComparatorUtils.comparingNaturalOrderNullsLast(FilePathGroupDto::getOrder))
-				.collect(CollectorUtils.collectLinkedHashMap(FilePathGroupDto::getGroupId, FilePathGroupDto::getGroup)));
+				.collect(CollectorUtils.collectLinkedHashMap(FilePathGroupDto::getGroupId, FilePathGroupDto::getGroup));
+	}
 
-		List<String> orderedGroupIdList = dto.getViewModel().getFilePathGroupMap().keySet().stream()
-				.collect(Collectors.toList());
+	private List<FilePathDto> createFilePathList(Map<String, String> filePathGroupMap) {
+		List<String> orderedGroupIdList = filePathGroupMap.keySet().stream().collect(Collectors.toList());
 
-		dto.getViewModel().setFilePathList(filePathList.stream().sorted(
+		return filePathList.stream().sorted(
 				(n1, n2) -> ComparatorUtils.comparingByOrderdList(orderedGroupIdList, n1.getGroupId(), n2.getGroupId()))
-				.collect(Collectors.toList()));
-
-		return result;
+				.collect(Collectors.toList());
 	}
 }

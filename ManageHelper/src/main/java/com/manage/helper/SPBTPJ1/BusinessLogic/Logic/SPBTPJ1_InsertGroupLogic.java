@@ -2,8 +2,8 @@ package com.manage.helper.SPBTPJ1.BusinessLogic.Logic;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.springframework.stereotype.Component;
 
@@ -38,23 +38,13 @@ public class SPBTPJ1_InsertGroupLogic extends BaseLogic<SPBTPJ1_InsertGroupBDto>
 	}
 
 	private String getGroupId() {
-		String result = null;
 		List<Integer> workList = filePathGroupList.stream().map(n -> Integer.valueOf(n.getGroupId())).sorted()
 				.collect(Collectors.toList());
 
-		Integer workId;
-		for (workId = 1; workId <= workList.size() + 1; workId++) {
-			if (!workList.contains(workId)) {
-				result = String.valueOf(workId);
-				break;
-			}
-		}
-		if (Objects.isNull(result)) {
-			result = String.valueOf(1);
-		}
+		Integer missingGroupId = IntStream.rangeClosed(1, workList.size() + 1).filter(id -> !workList.contains(id))
+				.findFirst().orElse(1);
 
-		return result;
-
+		return String.valueOf(missingGroupId);
 	}
 
 	@Override

@@ -13,6 +13,12 @@
 		<span>グループ</span>
 		<form action="/spbtpj2/update" method="post" th:object="${viewModel}">
 			<table class="custom-table">
+				<colgroup>
+					<col style="width: 10%;">
+					<col style="width: 10%;">
+					<col style="width: 10%;">
+					<col style="width: 70%;">
+				</colgroup>
 				<thead>
 					<tr>
 						<th>削除</th>
@@ -26,17 +32,20 @@
 						draggable="true" class="draggableRow">
 						<td><input type="checkbox"
 								th:field="*{inputGroupList[__${st.index}__].checked}" /></td>
-						<td th:text="${elmGroup.order}"></td>
-						<td th:text="${elmGroup.groupId}"></td>
+						<td th:text="${elmGroup.order}" class="disp-order"></td>
+						<td th:text="${elmGroup.groupId}" class="disp-groupId"></td>
 						<td th:text="${elmGroup.group}"></td>
 						<td th:hidden="hidden"><input type="text" class="input-order"
 								th:field="*{inputGroupList[__${st.index}__].order}" /></td>
 						<td th:hidden="hidden"><input type="text"
+								class="input-groupId"
 								th:field="*{inputGroupList[__${st.index}__].groupId}" /></td>
 					</tr>
 				</tbody>
 			</table>
 			<button type="submit" class="custom-btn">反映</button>
+			<button type="button" class="custom-btn float-md-end"
+				onclick="history.back()">戻る</button>
 		</form>
 	</div>
 </body>

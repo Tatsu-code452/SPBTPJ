@@ -25,30 +25,28 @@ public class SPBTPJ2_UpdateLogic extends BaseLogic<SPBTPJ2_UpdateBDto> {
 
 	@Override
 	protected boolean loadData(SPBTPJ2_UpdateBDto dto) {
-		boolean result = true;
 		filePathGroupList = filePathGroupDao.readAll();
-		return result;
+		return true;
 	}
 
 	@Override
 	protected boolean createData(SPBTPJ2_UpdateBDto dto) {
-		boolean result = true;
 		filePathGroupList = createSaveFilePathGroupList(dto);
-		return result;
+		return true;
 	}
 
 	@Override
 	protected boolean saveData(SPBTPJ2_UpdateBDto dto) {
-		boolean result = true;
-		result = filePathGroupDao.writeAll(filePathGroupList);
-		return result;
+		return filePathGroupDao.writeAll(filePathGroupList);
 	}
 
 	private List<FilePathGroupDto> createSaveFilePathGroupList(SPBTPJ2_UpdateBDto dto) {
 		List<FilePathGroupDto> result = new ArrayList<FilePathGroupDto>();
 
+		// ファイルグループのマップを取得
 		Map<String, FilePathGroupDto> filePathGroupMap = createFilePathGroupMap();
 
+		// 画面で指定した順にソートした入力情報を取得
 		List<SPBTPJ2_TableInputData> sortedInputOrderList = getSortedInputOrderList(dto.getInputGroupList());
 
 		// 入力後の順番で、削除対象外のデータをリストに追加
