@@ -25,19 +25,26 @@
 	</div>
 
 	<div id="filePathAddWrap" class="custom-div-with-border">
-		<span>ショートカット追加</span>
-		<form action="/spbtpj1/insert" method="post" th:object="${viewModel}">
-			<select id="groupId" name="groupId" th:field="*{groupId}"
-				class="form-select-sm">
-				<option th:each="entry : ${viewModel.filePathGroupMap}"
-					th:value="${entry.key}" th:text="${entry.value}"></option>
-			</select>
-			<input type="text" id="name" name="name" th:field="*{name}"
-				class="form-control-sm" />
-			<input type="text" id="path" name="path" th:field="*{path}"
-				class="form-control-sm" />
-			<button type="submit" class="custom-btn">ショートカット追加</button>
-		</form>
+		<span>ショートカット関連</span>
+		<div class="row">
+			<form action="/spbtpj1/insert" method="post" th:object="${viewModel}"
+				class="col-6">
+				<select id="groupId" name="groupId" th:field="*{groupId}"
+					class="form-select-sm">
+					<option th:each="entry : ${viewModel.filePathGroupMap}"
+						th:value="${entry.key}" th:text="${entry.value}"></option>
+				</select>
+				<input type="text" id="name" name="name" th:field="*{name}"
+					class="form-control-sm" />
+				<input type="text" id="path" name="path" th:field="*{path}"
+					class="form-control-sm" />
+				<button type="submit" class="custom-btn">ショートカット追加</button>
+			</form>
+			<form action="/spbtpj1/redirect" method="post" class="col-6">
+				<button type="submit" name="target" value="spbtpj3"
+					class="custom-btn float-end">ショートカット順変更</button>
+			</form>
+		</div>
 	</div>
 
 	<div id="fileGroupAddWrap" class="custom-div-with-border">
@@ -49,8 +56,9 @@
 					class="form-control-sm" />
 				<button type="submit" class="custom-btn">グループ追加</button>
 			</form>
-			<form action="/spbtpj1/redirect_spbtpj2" method="post" class="col-6">
-				<button type="submit" class="custom-btn float-end">グループ順変更</button>
+			<form action="/spbtpj1/redirect" method="post" class="col-6">
+				<button type="submit" name="target" value="spbtpj2"
+					class="custom-btn float-end">グループ順変更</button>
 			</form>
 		</div>
 	</div>

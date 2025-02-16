@@ -47,6 +47,7 @@
 									</td>
 									<td th:rowspan="*{getRowSpan()}"
 										th:text="*{filePathGroup.groupId}"></td>
+									<input type="hidden" th:field="*{filePathGroup.groupId}" />
 									<td th:rowspan="*{getRowSpan()}"
 										th:text="*{filePathGroup.group}"></td>
 								</th:block>
@@ -67,6 +68,11 @@
 													</td>
 													<td th:text="*{filePathInfo.name}"></td>
 													<td th:text="*{filePathInfo.path}"></td>
+													<input type="hidden" class="input-order"
+														th:field="*{order}" />
+													<input type="hidden" th:field="*{filePathInfo.name}" />
+													<input type="hidden" th:field="*{filePathInfo.path}" />
+													<input type="hidden" th:field="*{filePathInfo.encodePath}" />
 												</th:block>
 											</tr>
 										</tbody>
