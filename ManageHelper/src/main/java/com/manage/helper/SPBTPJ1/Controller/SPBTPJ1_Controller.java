@@ -68,7 +68,6 @@ public class SPBTPJ1_Controller {
 			Runtime.getRuntime().exec(cmd.stream().toArray(String[]::new));
 
 		} catch (Exception e) {
-			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
 		return Pages.PAGE_SPBTPJ1_REDIRECT;
@@ -77,5 +76,10 @@ public class SPBTPJ1_Controller {
 	@PostMapping("/redirect_spbtpj2")
 	public String redirectSpbtpj2() {
 		return Pages.PAGE_SPBTPJ2_REDIRECT;
+	}
+
+	@PostMapping("/redirect")
+	public String redirect(String target) {
+		return Pages.PAGE_REDIRECT_MAP.get(target);
 	}
 }
