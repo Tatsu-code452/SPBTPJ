@@ -44,7 +44,7 @@ public class SPBTPJ2_UpdateLogic extends BaseLogic<SPBTPJ2_UpdateBDto> {
 		List<FilePathGroupDto> result = new ArrayList<FilePathGroupDto>();
 
 		// ファイルグループのマップを取得
-		Map<String, FilePathGroupDto> filePathGroupMap = createFilePathGroupMap();
+		Map<String, FilePathGroupDto> filePathGroupMap = filePathGroupDao.createFilePathGroupMap(filePathGroupList);
 
 		// 画面で指定した順にソートした入力情報を取得
 		List<SPBTPJ2_TableInputData> sortedInputOrderList = getSortedInputOrderList(dto.getInputGroupList());
@@ -70,11 +70,6 @@ public class SPBTPJ2_UpdateLogic extends BaseLogic<SPBTPJ2_UpdateBDto> {
 		}
 
 		return result;
-	}
-
-	private Map<String, FilePathGroupDto> createFilePathGroupMap() {
-		return filePathGroupList.stream().collect(Collectors.toMap(FilePathGroupDto::getGroupId, n -> n));
-
 	}
 
 	private List<SPBTPJ2_TableInputData> getSortedInputOrderList(List<SPBTPJ2_TableInputData> inputGroupList) {

@@ -18,4 +18,5 @@ public class FilePathDao extends BaseDao<FilePathDto> {
 				}, new TypeReference<List<FilePathDto>>() {
 				});
 	}
+
 }

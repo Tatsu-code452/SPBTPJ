@@ -1,6 +1,8 @@
 package com.manage.helper.DAO;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 import org.thymeleaf.util.StringUtils;
@@ -19,4 +21,9 @@ public class FilePathGroupDao extends BaseDao<FilePathGroupDto> {
 				});
 
 	}
+
+	public Map<String, FilePathGroupDto> createFilePathGroupMap(List<FilePathGroupDto> filePathGroupList) {
+		return filePathGroupList.stream().collect(Collectors.toMap(FilePathGroupDto::getGroupId, n -> n));
+	}
+
 }

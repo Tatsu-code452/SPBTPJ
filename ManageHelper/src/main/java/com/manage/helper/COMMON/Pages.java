@@ -10,4 +10,8 @@ public final class Pages {
 
 	public static final String PAGE_SPBTPJ2 = "views/spbtpj2";
 	public static final String PAGE_SPBTPJ2_REDIRECT = "redirect:/spbtpj2/init";
+
+	public static final String PAGE_SPBTPJ3 = "views/spbtpj3";
+	public static final String PAGE_SPBTPJ3_REDIRECT = "redirect:/spbtpj3/init";
+
 }
