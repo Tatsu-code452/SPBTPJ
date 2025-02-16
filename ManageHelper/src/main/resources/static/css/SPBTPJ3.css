@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+#filePathWrap .col-group {
+	width: 10%;
+}
+
+#filePathWrap .col-group:nth-child(3) {
+	width: 20%;
+}
+
+#filePathWrap .col-group:nth-child(6) {
+	width: 40%;
+}
+
+#filePathWrap .col-group2 {
+	width: 16.5%;
+}
+
+#filePathWrap .col-group2:nth-child(2) {
+	width: 16.8%;
+}
+
+#filePathWrap .col-group2:nth-child(3) {
+	width: 66.7%;
+}

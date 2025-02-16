@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="stylesheet" th:href="@{/css/COMMON.css}">
+<link rel="stylesheet" th:href="@{/css/SPBTPJ3.css}">
+<script type="text/javascript" th:src="@{/js/SPBTPJ3.js}"></script>
+
+<title>ファイルパスリスト</title>
+</head>
+<body class="container">
+	<div id="filePathWrap" class="custom-div-with-border">
+		<span>ファイルパス</span>
+		<form action="/spbtpj3/update" method="post" th:object="${viewModel}">
+			<table class="table table-bordered">
+				<colgroup>
+					<col class="col-group">
+					<col class="col-group">
+					<col class="col-group">
+					<col class="col-group">
+					<col class="col-group">
+					<col class="col-group">
+				</colgroup>
+				<thead>
+					<tr>
+						<th colspan="3">グループ情報</th>
+						<th colspan="3">ファイルパス情報</th>
+					</tr>
+					<tr>
+						<th>削除</th>
+						<th>グループID</th>
+						<th>グループ名</th>
+						<th>削除</th>
+						<th>パス名</th>
+						<th>パス</th>
+					</tr>
+				</thead>
+				<tbody class="table-group-divider ">
+					<th:block th:each="elmTableData, st: *{tableDataList}"
+						th:object="${viewModel.tableDataList[__${st.index}__]}">
+						<th:block th:each="elmInnerTableData, st2: *{filePathInfoList}">
+							<tr>
+								<th:block th:if="${st2.first}">
+									<td th:rowspan="${elmTableData.getRowSpan()}">
+										<input type="checkbox" th:field="*{checked}" />
+									</td>
+									<td th:rowspan="*{getRowSpan()}"
+										th:text="*{filePathGroup.groupId}"></td>
+									<td th:rowspan="*{getRowSpan()}"
+										th:text="*{filePathGroup.group}"></td>
+								</th:block>
+								<td colspan="3" class="p-0">
+									<table class="custom-table m-0">
+										<colgroup>
+											<col class="col-group2">
+											<col class="col-group2">
+											<col class="col-group2">
+										</colgroup>
+										<tbody class="draggableWrap"
+											th:classappend="draggableGroup+${st.index}">
+											<tr draggable="true" class="draggableRow">
+												<th:block
+													th:object="${viewModel.tableDataList[__${st.index}__].filePathInfoList[__${st2.index}__]}">
+													<td>
+														<input type="checkbox" th:field="*{checked}" />
+													</td>
+													<td th:text="*{filePathInfo.name}"></td>
+													<td th:text="*{filePathInfo.path}"></td>
+												</th:block>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</th:block>
+					</th:block>
+				</tbody>
+			</table>
+			<button type="submit" class="custom-btn">反映</button>
+			<button type="button" class="custom-btn float-md-end"
+				onclick="history.back()">戻る</button>
+		</form>
+	</div>
+</body>
+</html>
