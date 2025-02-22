@@ -52,9 +52,7 @@ public class SPBTPJ2_UpdateLogic extends BaseLogic<SPBTPJ2_UpdateBDto> {
 		// 入力後の順番で、削除対象外のデータをリストに追加
 		sortedInputOrderList.stream().forEach(n -> {
 			if (!n.isChecked()) {
-				FilePathGroupDto work = filePathGroupMap.get(n.getGroupId());
-				work.setOrder(result.size() + 1);
-				result.add(work);
+				result.add(createFilePathGroup(filePathGroupMap.get(n.getGroupId()), result.size() + 1));
 			}
 
 			// リスト追加後、マップから削除
@@ -63,10 +61,7 @@ public class SPBTPJ2_UpdateLogic extends BaseLogic<SPBTPJ2_UpdateBDto> {
 
 		// マップの残りをリストに追加
 		if (!filePathGroupMap.isEmpty()) {
-			filePathGroupMap.values().stream().forEach(n -> {
-				n.setOrder(result.size() + 1);
-				result.add(n);
-			});
+			filePathGroupMap.values().stream().forEach(n -> result.add(createFilePathGroup(n, result.size() + 1)));
 		}
 
 		return result;
@@ -75,5 +70,10 @@ public class SPBTPJ2_UpdateLogic extends BaseLogic<SPBTPJ2_UpdateBDto> {
 	private List<SPBTPJ2_TableInputData> getSortedInputOrderList(List<SPBTPJ2_TableInputData> inputGroupList) {
 		return inputGroupList.stream().sorted(Comparator.comparing(SPBTPJ2_TableInputData::getOrder))
 				.collect(Collectors.toList());
+	}
+
+	private FilePathGroupDto createFilePathGroup(FilePathGroupDto base, Integer order) {
+		base.setOrder(order);
+		return base;
 	}
 }

@@ -32,26 +32,32 @@ public class SPBTPJ1_InsertGroupLogic extends BaseLogic<SPBTPJ1_InsertGroupBDto>
 	protected boolean createData(SPBTPJ1_InsertGroupBDto dto) {
 		boolean result = true;
 		filePathGroupList.add(new FilePathGroupDto(getGroupId(), dto.getGroup(), filePathGroupList.size() + 1));
-		filePathGroupList = filePathGroupList.stream().sorted(Comparator.comparing(FilePathGroupDto::getGroupId))
-				.collect(Collectors.toList());
+		filePathGroupList = createSortedFilePathGroupList();
 		return result;
-	}
-
-	private String getGroupId() {
-		List<Integer> workList = filePathGroupList.stream().map(n -> Integer.valueOf(n.getGroupId())).sorted()
-				.collect(Collectors.toList());
-
-		Integer missingGroupId = IntStream.rangeClosed(1, workList.size() + 1).filter(id -> !workList.contains(id))
-				.findFirst().orElse(1);
-
-		return String.valueOf(missingGroupId);
 	}
 
 	@Override
 	protected boolean saveData(SPBTPJ1_InsertGroupBDto dto) {
-		boolean result = true;
-		result = filePathGroupDao.writeAll(filePathGroupList);
-		return result;
+		return filePathGroupDao.writeAll(filePathGroupList);
+	}
+
+	private List<FilePathGroupDto> createSortedFilePathGroupList() {
+		return filePathGroupList.stream().sorted(Comparator.comparing(FilePathGroupDto::getGroupId))
+				.collect(Collectors.toList());
+	}
+
+	private String getGroupId() {
+		return String.valueOf(getMissingGroupId(createSortedGroupIdList()));
+	}
+
+	private List<Integer> createSortedGroupIdList() {
+		return filePathGroupList.stream().map(n -> Integer.valueOf(n.getGroupId())).sorted()
+				.collect(Collectors.toList());
+	}
+
+	private Integer getMissingGroupId(List<Integer> sortedGroupIdList) {
+		return IntStream.rangeClosed(1, sortedGroupIdList.size() + 1).filter(id -> !sortedGroupIdList.contains(id))
+				.findFirst().orElse(1);
 	}
 
 }

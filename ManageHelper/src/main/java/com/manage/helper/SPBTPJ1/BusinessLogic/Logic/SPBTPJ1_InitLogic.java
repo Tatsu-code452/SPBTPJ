@@ -47,10 +47,12 @@ public class SPBTPJ1_InitLogic extends BaseLogic<SPBTPJ1_InitBDto> {
 	}
 
 	private List<FilePathDto> createFilePathList(Map<String, String> filePathGroupMap) {
-		List<String> orderedGroupIdList = filePathGroupMap.keySet().stream().collect(Collectors.toList());
-
-		return filePathList.stream().sorted(
-				(n1, n2) -> ComparatorUtils.comparingByOrderdList(orderedGroupIdList, n1.getGroupId(), n2.getGroupId()))
+		return filePathList.stream().sorted((n1, n2) -> ComparatorUtils
+				.comparingByOrderdList(createOrderedGroupIdList(filePathGroupMap), n1.getGroupId(), n2.getGroupId()))
 				.collect(Collectors.toList());
+	}
+
+	private List<String> createOrderedGroupIdList(Map<String, String> filePathGroupMap) {
+		return filePathGroupMap.keySet().stream().collect(Collectors.toList());
 	}
 }
