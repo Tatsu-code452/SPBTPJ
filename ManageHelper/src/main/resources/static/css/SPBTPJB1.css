@@ -1,0 +1,45 @@
+@charset "UTF-8";
+
+td {
+	text-align: center !important;
+	align-content: center !important;
+}
+
+#taskTable td {
+	padding: 0 !important;
+}
+
+#ganttTable {
+	table-layout: fixed;
+	width: 100%;
+}
+
+#ganttTable td {
+	padding: 0 !important;
+	width: 35rem !important;
+	height: 1.1rem !important;
+}
+
+#ganttTable tbody td {
+	height: 1.3rem !important;
+}
+
+#taskListWrap {
+	font-size: 0.7rem;
+}
+
+#taskListWrap div {
+	padding: 0;
+}
+
+#taskTable .col-group {
+	width: 20%;
+}
+
+#taskTable .col-group2 {
+	width: 25%;
+}
+
+#taskTable .col-group3 {
+	width: 30%;
+}
