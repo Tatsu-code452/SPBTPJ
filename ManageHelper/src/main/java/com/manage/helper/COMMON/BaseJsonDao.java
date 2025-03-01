@@ -6,41 +6,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public abstract class BaseDao<T> {
+public abstract class BaseJsonDao<T> {
 	protected String fileName;
-	protected TypeReference<T> typeRef;
-	protected TypeReference<List<T>> typeRefList;
+	protected Class<T> clazz;
+
+	private final ObjectMapper objectMapper = new ObjectMapper()
+			.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
 	public List<T> readAll() {
-		List<T> result;
 		try {
-			ObjectMapper objectMapper = new ObjectMapper();
-			objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-			result = objectMapper.readValue(new File(fileName), typeRefList);
+			return objectMapper.readValue(new File(fileName),
+					objectMapper.getTypeFactory().constructCollectionType(List.class, clazz));
 		} catch (IOException | ClassCastException e) {
 			e.printStackTrace();
-			result = new ArrayList<T>();
+			return new ArrayList<T>();
 		}
-		return result;
 	}
 
 	public boolean writeAll(List<T> t) {
-		boolean result = true;
 		try {
-			ObjectMapper objectMapper = new ObjectMapper();
 			objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(fileName), t);
+			return true;
 		} catch (IOException e) {
 			e.printStackTrace();
-			result = false;
+			return false;
 		}
-
-		return result;
 	}
 
 }
