@@ -1,0 +1,21 @@
+#parseWrapper {
+	width: 90vw;
+	height: 70vh;
+	border: 2px solid #000000;
+	overflow: scroll;
+}
+
+#parseWrapper table {
+	border-collapse: collapse;
+}
+
+#parseWrapper td {
+	border: 1px solid black;
+	text-align: left;
+}
+
+#textArea {
+	width: 90vw;
+	height: 20vh;
+	margin-top: 20px;
+}

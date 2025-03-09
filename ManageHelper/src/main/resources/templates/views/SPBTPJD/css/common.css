@@ -18,14 +18,3 @@ body {
 #drop-area.highlight {
 	border-color: purple;
 }
-
-#svgWrapper {
-	width: 90vw;
-	height: 70vh;
-	border: 2px solid #000000;
-	overflow: scroll;
-}
-
-.selected {
-	fill: #59de4f;
-}

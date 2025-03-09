@@ -1,62 +1,23 @@
+import { loadCsv, setDragAndDrop } from "./common.js";
+
 const svgNamespace = "http://www.w3.org/2000/svg";
 
 // 画面表示時
 document.addEventListener("DOMContentLoaded", () => {
     // ファイルドロップ設定
-    setFileDrop();
+    setDragAndDrop(document.querySelector("#drop-area"), viewSvg);
     // 拡大縮小ボタン設定
     setZoomButton();
     // CSV読み込み
-    loadCsv("./data.csv");
+    loadCsv("./data/data.csv", viewSvg);
 });
-
-// ファイル読み込み
-function loadCsv(url) {
-    fetch(url)
-        .then((response) => response.text())
-        .then(viewSvg)
-        .catch((error) => console.error("Error loading CSV:", error));
-}
-
-// ファイルドロップ設定
-function setFileDrop(event, handler) {
-    const dropArea = document.querySelector("#drop-area");
-    dropArea.addEventListener("dragover", (event) =>
-        toggleHighlight(event, true)
-    );
-    dropArea.addEventListener("dragleave", (event) =>
-        toggleHighlight(event, false)
-    );
-    dropArea.addEventListener("drop", (event) => handleDrop(event));
-}
 
 // 拡大縮小ボタン設定
 function setZoomButton() {
     const zoomIn = document.querySelector("#zoomIn");
     const zoomOut = document.querySelector("#zoomOut");
     zoomIn.addEventListener("click", () => zoomSvg(1.2));
-    zoomOut.addEventListener("click", () => zoomSvg(0.8));  
-}
-
-// ハイライト切り替え
-function toggleHighlight(event, highlight) {
-    event.preventDefault();
-    event.currentTarget.classList.toggle("highlight", highlight);
-}
-
-// ドロップ処理
-function handleDrop(event) {
-    event.preventDefault();
-    toggleHighlight(event, false);
-
-    const file = event.dataTransfer.files[0];
-    if (file?.type === "text/csv") {
-        const reader = new FileReader();
-        reader.onload = (e) => viewSvg(e.target.result);
-        reader.readAsText(file);
-    } else {
-        alert("Invalid file type.");
-    }
+    zoomOut.addEventListener("click", () => zoomSvg(0.8));
 }
 
 // SVG表示
