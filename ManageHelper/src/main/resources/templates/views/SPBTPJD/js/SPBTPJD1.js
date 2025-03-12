@@ -16,15 +16,15 @@ document.addEventListener("DOMContentLoaded", () => {
 function setZoomButton() {
     const zoomIn = document.querySelector("#zoomIn");
     const zoomOut = document.querySelector("#zoomOut");
-    zoomIn.addEventListener("click", () => zoomSvg(1.2));
-    zoomOut.addEventListener("click", () => zoomSvg(0.8));
+    zoomIn.addEventListener("click", () => zoomSvg(0.2));
+    zoomOut.addEventListener("click", () => zoomSvg(-0.2));
 }
 
 // SVG表示
 function viewSvg(data) {
     const svg = createSvg();
-    let minX = 1000,
-        minY = 800,
+    let minX = 999999,
+        minY = 999999,
         maxX = 0,
         maxY = 0;
 
@@ -44,17 +44,14 @@ function viewSvg(data) {
             }
         });
 
-    resizeSvg(
-        svg,
-        maxX - minX,
-        maxY - minY,
-        `0 0 ${maxX - minX + 10} ${maxY - minY + 10}`
-    );
+    const svgWidth = maxX - minX + 10;
+    const svgHeight = maxY - minY + 10;
+    resizeSvg(svg, svgWidth, svgHeight, `0 0 ${svgWidth} ${svgHeight}`);
     document.querySelector("#svgWrapper").replaceChildren(svg);
     updateSelectionDisplay();
 }
 
-// SVG選択
+// SVG作成
 function createSvg() {
     return document.createElementNS(svgNamespace, "svg");
 }
@@ -66,7 +63,17 @@ function resizeSvg(svg, width, height, viewBox) {
     );
 }
 
-// SVG矩形
+// SVGグループ作成
+function createSvgGroup(id, x, y, width, height, color) {
+    const rectGroup = document.createElementNS(svgNamespace, "g");
+    rectGroup.appendChild(createSvgRect(id, x, y, width, height, color));
+    rectGroup.appendChild(
+        createSvgText(rectGroup.firstChild, id, x, y, width, height)
+    );
+    return rectGroup;
+}
+
+// SVG矩形作成
 function createSvgRect(id, x, y, width, height, color) {
     const rect = document.createElementNS(svgNamespace, "rect");
     Object.entries({
@@ -83,7 +90,7 @@ function createSvgRect(id, x, y, width, height, color) {
     return rect;
 }
 
-// SVGテキスト
+// SVGテキスト作成
 function createSvgText(rect, textContent, x, y, width, height) {
     const text = document.createElementNS(svgNamespace, "text");
     text.setAttribute("x", parseFloat(x) + parseFloat(width) / 2);
@@ -93,16 +100,6 @@ function createSvgText(rect, textContent, x, y, width, height) {
     text.textContent = textContent;
     text.addEventListener("click", () => toggleSelection(rect));
     return text;
-}
-
-// SVGグループ
-function createSvgGroup(id, x, y, width, height, color) {
-    const rectGroup = document.createElementNS(svgNamespace, "g");
-    rectGroup.appendChild(createSvgRect(id, x, y, width, height, color));
-    rectGroup.appendChild(
-        createSvgText(rectGroup.firstChild, id, x, y, width, height)
-    );
-    return rectGroup;
 }
 
 // 選択切り替え
@@ -126,13 +123,13 @@ function updateSelectionDisplay() {
 }
 
 // SVG拡大縮小
-function zoomSvg(scale) {
+function zoomSvg(scaleDiff) {
     const svg = document.querySelector("#svgWrapper svg");
-    if (svg) {
-        const viewBox = svg.getAttribute("viewBox").split(" ").map(Number);
-        const [x, y, width, height] = viewBox;
-        const newWidth = width * scale;
-        const newHeight = height * scale;
-        svg.setAttribute("viewBox", `${x} ${y} ${newWidth} ${newHeight}`);
+    const currentTransform = svg.getAttribute("transform");
+    const scaleMatch = currentTransform ? currentTransform.match(/scale\(([^)]+)\)/) : null;
+    const currentScale = scaleMatch ? parseFloat(scaleMatch[1]) : 1;
+    const newScale = currentScale + scaleDiff;
+    if (newScale >= 0.2){
+        svg.setAttribute("transform", `scale(${newScale})`);
     }
 }
