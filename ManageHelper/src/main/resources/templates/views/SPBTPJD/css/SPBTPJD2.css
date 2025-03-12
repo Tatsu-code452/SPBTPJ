@@ -2,11 +2,17 @@
 	width: 90vw;
 	height: 70vh;
 	border: 2px solid #000000;
-	overflow: scroll;
+	position: relative;
 }
 
 #parseWrapper table {
 	border-collapse: collapse;
+}
+
+#parseWrapper th {
+	border: 1px solid black;
+	background-color: #f2f2f2;
+	font-weight: bold;
 }
 
 #parseWrapper td {
@@ -14,8 +20,43 @@
 	text-align: left;
 }
 
+#tableWrapper {
+	overflow: scroll;
+	height: 60vh;
+}
+
+#parsedTable {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+#parsedTable th,
+#parsedTable td {
+	min-width: 100px;
+}
+
+#parsedTable th:first-child,
+#parsedTable td:first-child,
+#parsedTable th:nth-child(2),
+#parsedTable td:nth-child(2) {
+	position: sticky;
+	left: 0;
+	z-index: 1;
+	background-color: #f2f2f2;
+}
+
+#parsedTable th:nth-child(2),
+#parsedTable td:nth-child(2) {
+	left: 100px;
+	z-index: 2;
+}
+
 #textArea {
 	width: 90vw;
 	height: 20vh;
 	margin-top: 20px;
+}
+
+.error {
+	background-color: red;
 }
