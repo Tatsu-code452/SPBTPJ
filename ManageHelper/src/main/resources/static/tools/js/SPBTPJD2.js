@@ -44,7 +44,7 @@ function createHeader() {
 // ボディー行作成
 function createBody(text) {
     const tableBody = document.createElement("tbody");
-    const rows = text.split("\r\n");
+    const rows = text.split("\n");
     rows.forEach((row) => {
         const cols = row.split(",");
         const tr = document.createElement("tr");
