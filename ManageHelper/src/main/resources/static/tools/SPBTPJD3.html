@@ -6,7 +6,8 @@
     <meta charset="UTF-8">
     <script type="module" src="./js/SPBTPJD3.js"></script>
     <link rel="stylesheet" type="text/css" href="./css/common.css">
-    <title>CSV TOOL</title>
+    <link rel="stylesheet" type="text/css" href="./css/SPBTPJD3.css">
+    <title>CSV TO ICAL</title>
 </head>
 
 <body>
@@ -14,8 +15,11 @@
         <p>Drop your CSV file here</p>
     </div>
     <div>
-        <input type="file" id="calendarFileInput" accept=".csv">
-        <button id="exportButton">Export CSV</button>
+        <button id="download-ical">
+            Download iCal
+        </button>
+    </div>
+    <div id="parseWrapper">
     </div>
 </body>
 

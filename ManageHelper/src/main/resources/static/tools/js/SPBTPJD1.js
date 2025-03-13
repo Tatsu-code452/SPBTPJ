@@ -1,4 +1,4 @@
-import { loadCsv, setDragAndDrop } from "./common.js";
+import { loadCsv, setDragAndDrop, splitTextByBreakeLine } from "./common.js";
 
 const svgNamespace = "http://www.w3.org/2000/svg";
 
@@ -28,7 +28,7 @@ function viewSvg(data) {
         maxX = 0,
         maxY = 0;
 
-    data.split("\n")
+    splitTextByBreakeLine(data)
         .slice(1)
         .filter((row) => row.trim())
         .forEach((row) => {
@@ -126,10 +126,12 @@ function updateSelectionDisplay() {
 function zoomSvg(scaleDiff) {
     const svg = document.querySelector("#svgWrapper svg");
     const currentTransform = svg.getAttribute("transform");
-    const scaleMatch = currentTransform ? currentTransform.match(/scale\(([^)]+)\)/) : null;
+    const scaleMatch = currentTransform
+        ? currentTransform.match(/scale\(([^)]+)\)/)
+        : null;
     const currentScale = scaleMatch ? parseFloat(scaleMatch[1]) : 1;
     const newScale = currentScale + scaleDiff;
-    if (newScale >= 0.2){
+    if (newScale >= 0.2) {
         svg.setAttribute("transform", `scale(${newScale})`);
     }
 }

@@ -1,4 +1,4 @@
-import { loadCsv, setDragAndDrop } from "./common.js";
+import { loadCsv, setDragAndDrop, splitTextByBreakeLine } from "./common.js";
 
 document.addEventListener("DOMContentLoaded", function () {
     // ファイルドロップ設定
@@ -44,7 +44,7 @@ function createHeader() {
 // ボディー行作成
 function createBody(text) {
     const tableBody = document.createElement("tbody");
-    const rows = text.split("\n");
+    const rows = splitTextByBreakeLine(text);
     rows.forEach((row) => {
         const cols = row.split(",");
         const tr = document.createElement("tr");
@@ -60,7 +60,7 @@ function createBody(text) {
 
 // テキストエリア分割
 function splitTextArea(textArea) {
-    const textRows = textArea.value.split("\n");
+    const textRows = splitTextByBreakeLine(textArea.value);
     const parsedTable = document.querySelector("#parsedTable");
     const headerRow = parsedTable.rows[0];
     textRows.forEach((text, textRowIndex) => {

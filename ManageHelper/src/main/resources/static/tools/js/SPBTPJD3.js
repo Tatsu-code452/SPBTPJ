@@ -1,65 +1,116 @@
-// ファイル入力のイベントリスナーを設定
-document.getElementById('calendarFileInput').addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    if (file) {
-        loadCalendarData(file);
-    }
+import {
+    loadCsv,
+    setDragAndDrop,
+    splitTextByBreakeLine,
+    parseCSV,
+} from "./common.js";
+
+// 画面表示時
+document.addEventListener("DOMContentLoaded", () => {
+    // ファイルドロップ設定
+    setDragAndDrop(document.querySelector("#drop-area"), displayCalendarTable);
+    // CSV読み込み
+    loadCsv("./data/calendar.csv", displayCalendarTable);
+
+    document
+        .querySelector("#download-ical")
+        .addEventListener("click", () => downloadICal());
 });
 
-// Outlookからエクスポートした予定表データ(CSV)を読み込む関数
-function loadCalendarData(file) {
-    const reader = new FileReader();
-    reader.onload = function(event) {
-        const data = event.target.result;
-        const parsedData = parseCSV(data);
-        convertToICal(parsedData);
-    };
-    reader.readAsText(file);
+function displayCalendarTable(data) {
+    const rows = parseCSV(data);
+
+    const table = document.createElement("table");
+    table.id = "calendarTable";
+    table.appendChild(createHeader(rows.shift()));
+    table.appendChild(createBody(rows));
+
+    const tableWrapper = document.querySelector("#parseWrapper");
+    tableWrapper.replaceChildren(table);
 }
 
-// CSVデータをパースする関数
-function parseCSV(data) {
-    const rows = data.split("\r\n");
-    const headers = rows[0].split(",");
-    return rows.slice(1).map(row => {
-        const values = row.split(",");
-        return headers.reduce((obj, header, index) => {
-            obj[header.trim()] = values[index].trim();
-            return obj;
-        }, {});
+// ヘッダー行作成
+function createHeader(headers) {
+    const thead = document.createElement("thead");
+    const header = document.createElement("tr");
+    thead.appendChild(header);
+
+    headers.forEach((headerCell) => {
+        const th = document.createElement("th");
+        th.textContent = headerCell;
+        header.appendChild(th);
     });
+
+    return thead;
 }
 
-// CSVデータをiCalファイルに変換する関数
-function convertToICal(data) {
-    let icalString = "BEGIN:VCALENDAR\nVERSION:2.0\n";
-    data.forEach((row) => {
-        icalString += "BEGIN:VEVENT\n";
-        icalString += `DTSTART:${formatDate(row['Start Date'])}\n`;
-        icalString += `DTEND:${formatDate(row['End Date'])}\n`;
-        icalString += `SUMMARY:${row['Subject']}\n`;
-        icalString += `DESCRIPTION:${row['Description']}\n`;
-        icalString += `LOCATION:${row['Location']}\n`;
-        icalString += `ORGANIZER;CN=${row['Organizer']}:MAILTO:${row['Organizer Email']}\n`;
-        icalString += "END:VEVENT\n";
+// ボディー行作成
+function createBody(rows) {
+    const tbody = document.createElement("tbody");
+    rows.forEach((row) => {
+        const tr = document.createElement("tr");
+        row.forEach((cell) => {
+            const td = document.createElement("td");
+            td.textContent = cell;
+            tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
     });
-    icalString += "END:VCALENDAR";
-    saveICal(icalString, 'calendar.ics');
+
+    return tbody;
 }
 
-// 日付をiCal形式にフォーマットする関数
+// iCal形式でダウンロード
+function downloadICal(ical) {
+    const table = document.querySelector("#calendarTable");
+    if (!table) return;
+
+    const rows = Array.from(table.querySelectorAll("tr"));
+    const headers = rows.shift().querySelectorAll("th");
+    const events = rows.map((row) => {
+        const cells = row.querySelectorAll("td");
+        let event = {};
+        headers.forEach((header, index) => {
+            event[header.textContent] = cells[index].textContent;
+        });
+        return event;
+    });
+
+    const ical = createICal(events);
+    downloadICal(ical);
+}
+
+// iCal作成
+function createICal(events) {
+    let ical =
+        "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Your Organization//Your Product//EN\n";
+    events.forEach((event) => {
+        ical += "BEGIN:VEVENT\n";
+        ical += `SUMMARY:${event.Summary}\n`;
+        ical += `DTSTART:${formatDate(event.StartDate)}\n`;
+        ical += `DTEND:${formatDate(event.EndDate)}\n`;
+        ical += `DESCRIPTION:${event.Description}\n`;
+        ical += "END:VEVENT\n";
+    });
+    ical += "END:VCALENDAR";
+    return ical;
+}
+
+// 日付フォーマット
 function formatDate(dateString) {
     const date = new Date(dateString);
     return date.toISOString().replace(/[-:]/g, "").split(".")[0];
 }
 
-// iCalファイルを保存する関数
-function saveICal(calendar, filename) {
-    const blob = new Blob([calendar], { type: 'text/calendar' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+// iCalダウンロード
+function downloadICal(ical) {
+    const blob = new Blob([ical], { type: "text/calendar" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "calendar.ics";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
 }

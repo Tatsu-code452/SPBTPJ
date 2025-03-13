@@ -1,14 +1,27 @@
 // CSV読み込み
-export function loadCsv(url, callback) {
+function loadCsv(url, callback) {
     fetch(url)
         .then((response) => response.text())
         .then(callback)
         .catch((error) => console.error("Error loading CSV:", error));
 }
 
-export function setDragAndDrop(dropArea, callback) {
-    dropArea.addEventListener("dragover", (event) => toggleHighlight(event, true));
-    dropArea.addEventListener("dragleave", (event) => toggleHighlight(event, false));
+// CSV解析
+function parseCSV(data) {
+    return data
+        .replace(/"/g, "")
+        .split(/\r?\n/)
+        .map((row) => row.split(","));
+}
+
+// ドラッグアンドドロップ設定
+function setDragAndDrop(dropArea, callback) {
+    dropArea.addEventListener("dragover", (event) =>
+        toggleHighlight(event, true)
+    );
+    dropArea.addEventListener("dragleave", (event) =>
+        toggleHighlight(event, false)
+    );
     dropArea.addEventListener("drop", (event) => handleDrop(event, callback));
 }
 
@@ -33,3 +46,9 @@ function handleDrop(event, callback) {
     }
 }
 
+// テキスト改行分割
+function splitTextByBreakeLine(text) {
+    return text.split(/\r?\n/);
+}
+
+export { loadCsv, setDragAndDrop, splitTextByBreakeLine, parseCSV };
