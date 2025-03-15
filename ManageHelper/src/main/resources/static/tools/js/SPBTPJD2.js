@@ -1,22 +1,31 @@
-import { loadCsv, setDragAndDrop, splitTextByBreakeLine } from "./common.js";
+import {
+    loadCsv,
+    setDragAndDrop,
+    splitTextByBreakeLine,
+    createHeader,
+    createBody,
+} from "./common.js";
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", initialize);
+
+// 初期化処理
+function initialize() {
     // ファイルドロップ設定
-    setDragAndDrop(document.querySelector("#drop-area"), parseCSV);
+    setDragAndDrop(document.querySelector("#drop-area"), createTable);
     // CSV読み込み
-    loadCsv("./data/parse.csv", parseCSV);
+    loadCsv("./data/parse.csv", createTable);
 
-    const textArea = document.querySelector("#textArea");
     // テキストエリア入力設定
+    const textArea = document.querySelector("#textArea");
     textArea.addEventListener("input", () => splitTextArea(textArea));
-});
+}
 
-// CSV解析
-function parseCSV(text) {
+// テーブル作成
+function createTable(data) {
     const table = document.createElement("table");
     table.id = "parsedTable";
-    table.appendChild(createHeader());
-    table.appendChild(createBody(text));
+    table.appendChild(createHeader(["項目名", "桁数"]));
+    table.appendChild(createBody(data));
     const tableWrapper = document.querySelector("#tableWrapper");
     tableWrapper.replaceChildren(table);
 
@@ -24,38 +33,6 @@ function parseCSV(text) {
     if (textArea.value) {
         splitTextArea(textArea);
     }
-}
-
-// ヘッダー行作成
-function createHeader() {
-    // ヘッダー行を追加
-    const tableHeader = document.createElement("thead");
-    const headerRow = document.createElement("tr");
-    const headers = ["項目名", "桁数"];
-    headers.forEach((header) => {
-        const th = document.createElement("th");
-        th.textContent = header;
-        headerRow.appendChild(th);
-    });
-    tableHeader.appendChild(headerRow);
-    return tableHeader;
-}
-
-// ボディー行作成
-function createBody(text) {
-    const tableBody = document.createElement("tbody");
-    const rows = splitTextByBreakeLine(text);
-    rows.forEach((row) => {
-        const cols = row.split(",");
-        const tr = document.createElement("tr");
-        cols.forEach((col) => {
-            const td = document.createElement("td");
-            td.textContent = col;
-            tr.appendChild(td);
-        });
-        tableBody.appendChild(tr);
-    });
-    return tableBody;
 }
 
 // テキストエリア分割
