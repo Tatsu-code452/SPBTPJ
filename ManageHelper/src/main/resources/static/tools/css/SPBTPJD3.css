@@ -1,21 +1,21 @@
-#parseWrapper {
-	width: 90vw;
-	height: 70vh;
-	border: 2px solid #000000;
-	overflow: scroll;
+#taskWrapper {
+    width: 90vw;
+    height: 70vh;
+    border: 2px solid #000000;
+    overflow: scroll;
 }
 
-#parseWrapper table {
-	border-collapse: collapse;
+#taskWrapper table {
+    border-collapse: collapse;
 }
 
-#parseWrapper th {
-	border: 1px solid black;
-	background-color: #f2f2f2;
-	font-weight: bold;
+#taskWrapper th {
+    border: 1px solid black;
+    background-color: #f2f2f2;
+    font-weight: bold;
 }
 
-#parseWrapper td {
-	border: 1px solid black;
-	text-align: left;
+#taskWrapper td {
+    border: 1px solid black;
+    text-align: left;
 }

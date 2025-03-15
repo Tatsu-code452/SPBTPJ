@@ -1,20 +1,20 @@
 body {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: space-around;
-	height: 95vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 95vh;
 }
 
 #drop-area {
-	border: 2px dashed #ccc;
-	border-radius: 20px;
-	width: 300px;
-	height: 100px;
-	font-family: sans-serif;
-	text-align: center;
+    border: 2px dashed #ccc;
+    border-radius: 20px;
+    width: 300px;
+    height: 100px;
+    font-family: sans-serif;
+    text-align: center;
 }
 
 #drop-area.highlight {
-	border-color: purple;
+    border-color: purple;
 }
