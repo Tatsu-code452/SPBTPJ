@@ -1,54 +1,52 @@
-#parseWrapper {
+#tableWrapper {
 	width: 90vw;
 	height: 70vh;
 	border: 2px solid #000000;
 	position: relative;
 }
 
-#parseWrapper table {
-	border-collapse: collapse;
-}
-
-#parseWrapper th {
-	border: 1px solid black;
-	background-color: #f2f2f2;
-	font-weight: bold;
-}
-
-#parseWrapper td {
-	border: 1px solid black;
-	text-align: left;
-}
-
-#tableWrapper {
-	overflow: scroll;
-	height: 60vh;
-}
-
-#parsedTable {
+#tableWrapper table {
 	width: 100%;
-	border-collapse: collapse;
+	border-collapse: separate;
+	border-spacing: 0;
 }
 
 #parsedTable th,
 #parsedTable td {
+	border: 1px solid #000;
+	padding: 8px;
+	text-align: left;
 	min-width: 100px;
 }
 
-#parsedTable th:first-child,
-#parsedTable td:first-child,
-#parsedTable th:nth-child(2),
-#parsedTable td:nth-child(2) {
-	position: sticky;
-	left: 0;
-	z-index: 1;
+#parsedTable th {
 	background-color: #f2f2f2;
 }
 
-#parsedTable th:nth-child(2),
-#parsedTable td:nth-child(2) {
-	left: 100px;
+#parsedTable thead tr:first-child,
+#parsedTable thead tr:first-child th:first-child,
+#parsedTable thead tr:first-child th:nth-child(2) {
+	position: sticky;
+	top: 0;
 	z-index: 2;
+}
+
+#parsedTable tbody td:first-child,
+#parsedTable tbody td:nth-child(2) {
+	position: sticky;
+	background-color: #f2f2f2;
+	z-index: 1;
+}
+
+#parsedTable thead tr:first-child,
+#parsedTable thead tr:first-child th:first-child,
+#parsedTable tbody td:first-child {
+	left: 0;
+}
+
+#parsedTable thead tr:first-child th:nth-child(2),
+#parsedTable tbody td:nth-child(2) {
+	left: 100px;
 }
 
 #textArea {

@@ -18,3 +18,25 @@ body {
 #drop-area.highlight {
     border-color: purple;
 }
+
+.container {
+    width: 90vw;
+    height: 70vh;
+    border: 2px solid #000000;
+    overflow: scroll;
+}
+
+.table {
+    border-collapse: collapse;
+}
+
+.table th {
+    border: 1px solid black;
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.table td {
+    border: 1px solid black;
+    text-align: left;
+}
