@@ -1,5 +1,6 @@
 import {
     loadCsv,
+    parseCSV,
     setDragAndDrop,
     createInputCell,
     formatDateForInput,
@@ -21,6 +22,10 @@ function initialize() {
     setTaskTableEvent();
     // ダウンロードボタン設定
     setDownloadButton();
+    // コピー＆ペーストでタスクを入力
+    const pasteTasksElement = document
+        .querySelector("#task-table")
+        .addEventListener("paste", handlePaste);
 }
 
 // CSVドロップ時の処理
@@ -148,4 +153,24 @@ function createICal(tasks) {
         events,
         "END:VCALENDAR",
     ].join("\n");
+}
+
+function handlePaste(event) {
+    event.preventDefault(); // デフォルトのペースト動作を防ぐ
+    const rows = parseCSV(event.clipboardData.getData("text"));
+    const tbody = document.querySelector("#task-table tbody");
+
+    rows.forEach((cols) => {
+        if (cols.length >= 3) {
+            const newRow = document.createElement("tr");
+            newRow.appendChild(createInputCell("text", cols[0])); // タスク名
+            newRow.appendChild(
+                createInputCell("datetime-local", formatDateForInput(cols[1]))
+            ); // 開始日時
+            newRow.appendChild(
+                createInputCell("datetime-local", formatDateForInput(cols[2]))
+            ); // 終了日時
+            tbody.appendChild(newRow);
+        }
+    });
 }
