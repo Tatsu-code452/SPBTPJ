@@ -174,7 +174,8 @@ function formatDateForInput(dateStr) {
 // 日付フォーマット
 function formatDate(dateStr) {
     const date = new Date(dateStr);
-    return date.toISOString().replace(/[-:]/g, "").split(".")[0];
+    const offsetDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+    return offsetDate.toISOString().replace(/[-:]/g, "").split(".")[0];
 }
 
 export {
