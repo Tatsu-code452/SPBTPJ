@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/styles.css">
+    <script type="module" src="./js/websocket.js"></script>
+    <script type="module" src="./js/tcp.js"></script>
+    <title>通信デモ</title>
+</head>
+
+<body>
+    <header>
+        <h1>通信デモ</h1>
+    </header>
+    <main>
+        <section id="websocketSection" data-type="websocket">
+            <h2>WebSocket通信</h2>
+            <label for="messageInput">メッセージ:</label>
+            <input id="messageInput" type="text" placeholder="WebSocketメッセージを入力">
+            <button id="sendButton">送信</button>
+            <div id="messages" aria-live="polite" aria-atomic="true" style="height: 25vh; overflow: scroll;"></div>
+        </section>
+        <section id="tcpSection" data-type="tcp">
+            <h2>TCP/IP通信</h2>
+            <label for="tcpMessageInput">メッセージ:</label>
+            <input id="tcpMessageInput" type="text" placeholder="TCP/IPメッセージを入力">
+            <button id="tcpSendButton">送信</button>
+            <div id="tcpMessages" aria-live="polite" aria-atomic="true" style="height: 25vh; overflow: scroll;"></div>
+        </section>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sendButton = document.getElementById('sendButton');
+            const tcpSendButton = document.getElementById('tcpSendButton');
+
+            sendButton.addEventListener('click', () => {
+                if (sendButton.disabled) return;
+                sendButton.disabled = true;
+                // WebSocket送信処理
+                setTimeout(() => sendButton.disabled = false, 1000); // 1秒後にボタンを再度有効化
+            });
+
+            tcpSendButton.addEventListener('click', () => {
+                if (tcpSendButton.disabled) return;
+                tcpSendButton.disabled = true;
+                // TCP/IP送信処理
+                setTimeout(() => tcpSendButton.disabled = false, 1000); // 1秒後にボタンを再度有効化
+            });
+        });
+    </script>
+</body>
+
+</html>

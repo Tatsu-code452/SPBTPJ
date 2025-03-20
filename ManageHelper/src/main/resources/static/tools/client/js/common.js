@@ -19,7 +19,9 @@ function parseCSV(text) {
 // ドラッグアンドドロップ設定
 function setDragAndDrop(dropArea, callback) {
     ["dragover", "dragleave", "drop"].forEach((eventType) => {
-        dropArea.addEventListener(eventType, (event) => handleDragEvent(event, callback));
+        dropArea.addEventListener(eventType, (event) =>
+            handleDragEvent(event, callback)
+        );
     });
 }
 
@@ -155,22 +157,21 @@ function createSvgText(rect, textContent, x, y, width, height) {
 
 // 選択切り替え
 function toggleSelection(rect) {
+    rect.classList.toggle("selected");
     if (rect.classList.contains("selected")) {
-        rect.classList.remove("selected");
-    } else {
-        rect.classList.add("selected");
-        rect.dataset.selectionOrder = Date.now(); // 選択順を維持するためのタイムスタンプを追加
+        rect.dataset.selectionOrder = Date.now();
     }
     updateSelectionDisplay();
 }
 
 // 選択表示更新
 function updateSelectionDisplay() {
-    const selectedRects = Array.from(
-        document.querySelectorAll(".selected")
-    ).sort((a, b) => a.dataset.selectionOrder - b.dataset.selectionOrder); // 選択順にソート
-    const selectedIds = selectedRects.map((rect) => rect.id);
-    document.querySelector("#svgSelect").value = selectedIds.join(",");
+    const selectedRects = [...document.querySelectorAll(".selected")].sort(
+        (a, b) => a.dataset.selectionOrder - b.dataset.selectionOrder
+    );
+    document.querySelector("#svgSelect").value = selectedRects
+        .map((rect) => rect.id)
+        .join(",");
 }
 
 // 日付をdatetime-local用にフォーマット
@@ -185,8 +186,32 @@ function formatDateForInput(dateStr) {
 // 日付フォーマット
 function formatDate(dateStr) {
     const date = new Date(dateStr);
-    const offsetDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+    const offsetDate = new Date(
+        date.getTime() - date.getTimezoneOffset() * 60000
+    );
     return offsetDate.toISOString().replace(/[-:]/g, "").split(".")[0];
+}
+
+// メッセージを追加する関数
+function appendMessage(outputId, message) {
+    const messagesDiv = document.getElementById(outputId);
+    const messageElement = document.createElement("p");
+    messageElement.textContent = message;
+    messagesDiv.appendChild(messageElement);
+}
+
+// 送信ボタンのイベントハンドラを設定
+function setupSendButtonHandler(buttonId, inputId, outputId, type, ws) {
+    const sendButton = document.getElementById(buttonId);
+    sendButton.addEventListener("click", () => {
+        const messageInput = document.getElementById(inputId);
+        const message = messageInput.value.trim();
+        if (message) {
+            ws.send(JSON.stringify({ type, message }));
+            appendMessage(outputId, `クライアント(${type}): ${message}`);
+            messageInput.value = "";
+        }
+    });
 }
 
 export {
@@ -206,4 +231,6 @@ export {
     updateSelectionDisplay,
     formatDateForInput,
     formatDate,
+    appendMessage,
+    setupSendButtonHandler,
 };
