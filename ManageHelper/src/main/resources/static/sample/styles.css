@@ -4,13 +4,12 @@ body {
     position: absolute;
     overflow: hidden;
     margin: 8px;
-    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    right: 0px;
 }
 
 body.rotate-landscape {
     /* 横向き時のスタイル */
     top: env(safe-area-inset-top);
-    left: env(safe-area-inset-left);
     width: calc(100vw - env(safe-area-inset-left) - env(safe-area-inset-right) - 16px);
     height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 16px);
     padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
@@ -19,10 +18,8 @@ body.rotate-landscape {
 body.rotate-portrait {
     /* 縦向き時のスタイル */
     transform: rotate(90deg);
-    transform-origin: top left;
-    top: env(safe-area-inset-top);
-    left: calc(100vw - env(safe-area-inset-bottom));
-    /* Adjusted for rotated view */
+    transform-origin: top right;
+    top: calc(100vh - env(safe-area-inset-top) - 16px);
     width: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 16px);
     height: calc(100vw - env(safe-area-inset-left) - env(safe-area-inset-right) - 16px);
     padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
