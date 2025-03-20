@@ -18,34 +18,45 @@ function parseCSV(text) {
 
 // ドラッグアンドドロップ設定
 function setDragAndDrop(dropArea, callback) {
-    dropArea.addEventListener("dragover", (event) =>
-        toggleHighlight(event, true)
-    );
-    dropArea.addEventListener("dragleave", (event) =>
-        toggleHighlight(event, false)
-    );
-    dropArea.addEventListener("drop", (event) => handleDrop(event, callback));
+    ["dragover", "dragleave", "drop"].forEach((eventType) => {
+        dropArea.addEventListener(eventType, (event) => handleDragEvent(event, callback));
+    });
+}
+
+// ドラッグイベント処理
+function handleDragEvent(event, callback) {
+    event.preventDefault();
+    if (event.type === "dragover") {
+        toggleHighlight(event, true);
+    } else if (event.type === "dragleave") {
+        toggleHighlight(event, false);
+    } else if (event.type === "drop") {
+        toggleHighlight(event, false);
+        processDrop(event, callback);
+    }
+}
+
+// ドロップ処理
+function processDrop(event, callback) {
+    const file = event.dataTransfer.files[0];
+    if (file?.type === "text/csv") {
+        readCsvFile(file, callback);
+    } else {
+        alert("Invalid file type.");
+    }
+}
+
+// CSVファイル読み込み
+function readCsvFile(file, callback) {
+    const reader = new FileReader();
+    reader.onload = (e) => callback(parseCSV(e.target.result));
+    reader.readAsText(file);
 }
 
 // ハイライト切り替え
 function toggleHighlight(event, highlight) {
     event.preventDefault();
     event.currentTarget.classList.toggle("highlight", highlight);
-}
-
-// ドロップ処理
-function handleDrop(event, callback) {
-    event.preventDefault();
-    toggleHighlight(event, false);
-
-    const file = event.dataTransfer.files[0];
-    if (file?.type === "text/csv") {
-        const reader = new FileReader();
-        reader.onload = (e) => callback(parseCSV(e.target.result));
-        reader.readAsText(file);
-    } else {
-        alert("Invalid file type.");
-    }
 }
 
 // テキスト改行分割

@@ -51,7 +51,7 @@ function generateSessionId() {
 
 // セキュリティ対策: ディレクトリトラバーサル攻撃を防ぐためにファイルパスを正規化
 function sanitizePath(filePath) {
-    return path.normalize(filePath).replace(/^(\.\.[\/\\])+/, '');
+    return path.normalize(filePath).replace(/^(\.\.[\/\\])+/, "");
 }
 
 // セキュリティ対策: XSS攻撃を防ぐためにHTMLエスケープ関数を追加
@@ -69,5 +69,5 @@ module.exports = {
     sendFile,
     generateSessionId,
     sanitizePath,
-    escapeHtml
+    escapeHtml,
 };
