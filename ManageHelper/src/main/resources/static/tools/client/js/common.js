@@ -214,6 +214,28 @@ function setupSendButtonHandler(buttonId, inputId, outputId, type, ws) {
     });
 }
 
+// 初期化処理を共通化
+function initializeDragAndDrop(dropAreaSelector, callback) {
+    const dropArea = document.querySelector(dropAreaSelector);
+    if (dropArea) {
+        setDragAndDrop(dropArea, callback);
+    }
+}
+
+function initializeButton(buttonSelector, callback) {
+    const button = document.querySelector(buttonSelector);
+    if (button) {
+        button.addEventListener("click", callback);
+    }
+}
+
+function initializeTextArea(textAreaSelector, callback) {
+    const textArea = document.querySelector(textAreaSelector);
+    if (textArea) {
+        textArea.addEventListener("input", callback);
+    }
+}
+
 export {
     loadCsv,
     setDragAndDrop,
@@ -233,4 +255,7 @@ export {
     formatDate,
     appendMessage,
     setupSendButtonHandler,
+    initializeDragAndDrop,
+    initializeButton,
+    initializeTextArea,
 };

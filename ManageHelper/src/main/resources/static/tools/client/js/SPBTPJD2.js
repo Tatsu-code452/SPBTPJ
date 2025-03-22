@@ -1,23 +1,23 @@
 import {
     loadCsv,
-    setDragAndDrop,
+    parseCSV,
     splitTextByBreakeLine,
     createHeader,
     createBody,
+    initializeDragAndDrop,
+    initializeButton,
+    initializeTextArea,
 } from "./common.js";
 
 document.addEventListener("DOMContentLoaded", initialize);
 
 // 初期化処理
 function initialize() {
-    // ファイルドロップ設定
-    setDragAndDrop(document.querySelector("#drop-area"), createTable);
-    // CSV読み込み
-    loadCsv("./data/parse.csv", createTable);
-
-    // テキストエリア入力設定
-    const textArea = document.querySelector("#textArea");
-    textArea.addEventListener("input", () => splitTextArea(textArea));
+    initializeDragAndDrop("#drop-area", createTable);
+    initializeTextArea("#textArea", () => splitTextArea(document.querySelector("#textArea")));
+    initializeButton("#loadFileButton", handleLoadFileClick);
+    loadCsv("./data/parser/parse.csv", createTable);
+    fetchFileList();
 }
 
 // テーブル作成
@@ -86,4 +86,38 @@ function updateTableCell(tableRow, cellIndex, text, isError) {
         tableRow.cells[cellIndex].textContent = text;
     }
     tableRow.cells[cellIndex].classList.toggle("error", isError);
+}
+
+// Fetch the list of files from /data/parser
+async function fetchFileList() {
+    try {
+        const response = await fetch("./data/parser/");
+        if (!response.ok) {
+            console.error(`Failed to fetch file list. Status: ${response.status}`);
+            throw new Error("Failed to fetch file list");
+        }
+        const csvData = await response.text();
+        const files = parseCSV(csvData);
+        const fileSelector = document.getElementById("fileSelector");
+        fileSelector.innerHTML = files[0]
+            .map((file) => {
+                const fileName = file.replace(/\.[^/.]+$/, ""); // Remove extension
+                return `<option value="${file}">${fileName}</option>`;
+            })
+            .join("");
+    } catch (error) {
+        console.error("Error fetching file list:", error.message); // エラー詳細を出力
+    }
+}
+
+// Handle load file button click
+async function handleLoadFileClick() {
+    const fileSelector = document.getElementById("fileSelector");
+    const selectedFile = fileSelector.value;
+    if (!selectedFile) return alert("Please select a file");
+    try {
+        loadCsv(`/data/parser/${selectedFile}`, createTable);
+    } catch (error) {
+        console.error("Error loading file:", error);
+    }
 }

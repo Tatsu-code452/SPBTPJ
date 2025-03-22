@@ -45,9 +45,11 @@ const server = http.createServer((req, res) => {
 // TCPサーバーを起動
 const tcpServer = createTcpServer(tcpPort); // TCPサーバーを起動
 const tcpClient = createTcpClient(tcpPort); // TCPクライアントを作成
+
 // WebSocketサーバーを起動
 const WebSocketServer = createWebSocketServer(server);
 WebSocketServer.on("connection", (ws) => {
+    // WebSocketメッセージ受信時の処理
     ws.on("message", (message) => {
         const parsedMessage = JSON.parse(message);
         if (parsedMessage.type === "tcp") {
@@ -57,6 +59,7 @@ WebSocketServer.on("connection", (ws) => {
         }
     });
 });
+
 // サーバーを起動
 server.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);

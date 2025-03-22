@@ -1,10 +1,11 @@
 import {
     loadCsv,
     parseCSV,
-    setDragAndDrop,
     createInputCell,
     formatDateForInput,
     formatDate,
+    initializeDragAndDrop,
+    initializeButton,
 } from "./common.js";
 
 // 画面表示時
@@ -12,17 +13,10 @@ document.addEventListener("DOMContentLoaded", initialize);
 
 // 初期化処理
 function initialize() {
-    // テンプレート行作成
-    templateRow();
-    // ドラッグ＆ドロップ設定
-    setDragAndDrop(document.querySelector("#drop-area"), handleCsvDrop);
-    // CSV読み込み
+    initializeDragAndDrop("#drop-area", handleCsvDrop);
+    initializeButton("#download-ical", handleDownloadClick);
     loadCsv("./data/task.csv", handleCsvDrop);
-    // タスクテーブルイベント設定
     setTaskTableEvent();
-    // ダウンロードボタン設定
-    setDownloadButton();
-    // コピー＆ペーストでタスクを入力
     const pasteTasksElement = document
         .querySelector("#task-table")
         .addEventListener("paste", handlePaste);
@@ -91,13 +85,6 @@ function handleFocusOut(event) {
             row.remove(); // タスク名が空で複数行が存在する場合、行を削除
         }
     }
-}
-
-// ダウンロードボタン設定
-function setDownloadButton() {
-    document
-        .querySelector("#download-ical")
-        .addEventListener("click", handleDownloadClick);
 }
 
 // ダウンロードボタンクリック時の処理

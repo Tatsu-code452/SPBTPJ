@@ -9,6 +9,22 @@ function getContentType(extname) {
         ".html": "text/html",
         ".js": "text/javascript",
         ".css": "text/css",
+        ".json": "application/json",
+        ".png": "image/png",
+        ".jpg": "image/jpeg",
+        ".jpeg": "image/jpeg",
+        ".gif": "image/gif",
+        ".svg": "image/svg+xml",
+        ".ico": "image/x-icon",
+        ".woff": "font/woff",
+        ".woff2": "font/woff2",
+        ".ttf": "font/ttf",
+        ".eot": "application/vnd.ms-fontobject",
+        ".otf": "font/otf",
+        ".xml": "application/xml",
+        ".pdf": "application/pdf",
+        ".zip": "application/zip",
+        ".txt": "text/plain"
     };
     return mimeTypes[extname] || "application/octet-stream";
 }
@@ -19,32 +35,54 @@ function sendFile(res, filePath, contentType) {
     const sanitizedPath = sanitizePath(filePath);
 
     if (!sanitizedPath.startsWith(baseDir)) {
-        res.writeHead(400, { "Content-Type": "text/plain" });
-        res.end("Invalid file path");
-        return;
+        return sendError(res, 400, "Invalid file path");
     }
 
-    fs.readFile(sanitizedPath, (error, content) => {
-        if (error) {
-            if (error.code == "ENOENT") {
-                fs.readFile(
-                    path.join(baseDir, "404.html"),
-                    (error, content) => {
-                        res.writeHead(200, { "Content-Type": "text/html" });
-                        res.end(content, "utf-8");
+    fs.stat(sanitizedPath, (err, stats) => {
+        if (err) {
+            return sendError(res, 500, "Error accessing file or directory");
+        }
+
+        if (stats.isDirectory()) {
+            fs.readdir(sanitizedPath, (err, files) => {
+                if (err) {
+                    return sendError(res, 500, "Error reading directory");
+                }
+                res.writeHead(200, { "Content-Type": contentType });
+                const csvContent = files.join(",");
+                res.end(csvContent, "utf-8");
+                return;
+                
+            });
+        } else if (stats.isFile()) {
+            fs.readFile(sanitizedPath, (error, content) => {
+                if (error) {
+                    if (error.code === "ENOENT") {
+                        return send404Page(res, baseDir);
                     }
-                );
-            } else {
-                res.writeHead(500);
-                res.end(
-                    `Sorry, check with the site admin for error: ${error.code} ..\n`
-                );
-            }
+                    return sendError(res, 500, `Error: ${error.code}`);
+                }
+                res.writeHead(200, { "Content-Type": contentType });
+                res.end(content, "utf-8");
+            });
         } else {
-            res.writeHead(200, { "Content-Type": contentType });
-            res.end(content, "utf-8");
+            sendError(res, 400, "Invalid file or directory");
         }
     });
+}
+
+// 404ページを送信する関数
+function send404Page(res, baseDir) {
+    fs.readFile(path.join(baseDir, "404.html"), (error, content) => {
+        res.writeHead(404, { "Content-Type": "text/html" });
+        res.end(content || "404 Not Found", "utf-8");
+    });
+}
+
+// エラーレスポンスを送信する関数
+function sendError(res, statusCode, message) {
+    res.writeHead(statusCode, { "Content-Type": "text/plain" });
+    res.end(message);
 }
 
 // セッションIDを生成する関数
@@ -80,7 +118,6 @@ const sessions = {}; // セッション管理用の変数
 function handleSession(req, res) {
     const cookies = cookie.parse(req.headers.cookie || "");
     let sessionId = cookies.sessionId;
-    console.log("Session ID:", sessionId); // デバッグ用ログ
     if (!sessionId || !sessions[sessionId]) {
         sessionId = generateSessionId();
         sessions[sessionId] = {};
@@ -99,9 +136,7 @@ function handleSession(req, res) {
 function sendHtmlFileList(res, baseDir) {
     fs.readdir(baseDir, (err, files) => {
         if (err) {
-            res.writeHead(500);
-            res.end("Error reading directory");
-            return;
+            return sendError(res, 500, "Error reading directory");
         }
         const htmlFiles = files.filter(
             (file) => path.extname(file).toLowerCase() === ".html"

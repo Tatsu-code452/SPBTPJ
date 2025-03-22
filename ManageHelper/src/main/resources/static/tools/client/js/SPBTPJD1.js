@@ -1,10 +1,11 @@
 import {
     loadCsv,
-    setDragAndDrop,
     createSvg,
     resizeSvg,
     createSvgGroup,
     updateSelectionDisplay,
+    initializeDragAndDrop,
+    initializeButton,
 } from "./common.js";
 
 // 画面表示時
@@ -12,20 +13,10 @@ document.addEventListener("DOMContentLoaded", initialize);
 
 // 初期化処理
 function initialize() {
-    // ファイルドロップ設定
-    setDragAndDrop(document.querySelector("#drop-area"), viewSvg);
-    // 拡大縮小ボタン設定
-    setZoomButton();
-    // CSV読み込み
+    initializeDragAndDrop("#drop-area", viewSvg);
+    initializeButton("#zoomIn", () => zoomSvg(0.2));
+    initializeButton("#zoomOut", () => zoomSvg(-0.2));
     loadCsv("./data/data.csv", viewSvg);
-}
-
-// 拡大縮小ボタン設定
-function setZoomButton() {
-    const zoomIn = document.querySelector("#zoomIn");
-    const zoomOut = document.querySelector("#zoomOut");
-    zoomIn.addEventListener("click", () => zoomSvg(0.2));
-    zoomOut.addEventListener("click", () => zoomSvg(-0.2));
 }
 
 // SVG表示

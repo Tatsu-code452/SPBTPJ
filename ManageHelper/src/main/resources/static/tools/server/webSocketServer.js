@@ -3,11 +3,14 @@ const WebSocket = require("ws");
 function createWebSocketServer(server) {
     const wss = new WebSocket.Server({ server });
 
+    // WebSocket接続時の処理
     wss.on("connection", (ws) => {
         console.log("WebSocket connection established");
 
+        // クライアントからのメッセージ受信時の処理
         ws.on("message", (message) => {
-            // 別途設定;
+            console.log("Received message:", message);
+            // 必要に応じて処理を追加
         });
 
         // 接続が閉じられた場合の処理
@@ -22,10 +25,12 @@ function createWebSocketServer(server) {
             }
         }, 5000);
 
+        // 接続が閉じられたらタイマーをクリア
         ws.on("close", () => {
-            clearInterval(intervalId); // 接続が閉じられたらタイマーをクリア
+            clearInterval(intervalId);
         });
     });
+
     return wss;
 }
 
