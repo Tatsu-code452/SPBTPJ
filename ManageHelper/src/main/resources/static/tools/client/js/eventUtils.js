@@ -8,6 +8,15 @@ function initializeDragAndDrop(dropAreaSelector, callback) {
     }
 }
 
+// クリックイベント設定
+function setClickEvent(target, callback) {
+    const element =
+        typeof target === "string" ? document.querySelector(target) : target;
+    if (element) {
+        element.addEventListener("click", callback);
+    }
+}
+
 function initializeButton(buttonSelector, callback) {
     const button = document.querySelector(buttonSelector);
     if (button) {
@@ -62,6 +71,7 @@ function toggleHighlight(event, highlight) {
 
 export {
     setDragAndDrop,
+    setClickEvent,
     initializeDragAndDrop,
     initializeButton,
     initializeTextArea,

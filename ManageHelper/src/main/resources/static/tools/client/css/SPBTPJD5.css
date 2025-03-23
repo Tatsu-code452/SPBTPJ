@@ -1,0 +1,24 @@
+#tableWrapper {
+	width: 90vw;
+	height: 70vh;
+	border: 2px solid #000000;
+	position: relative;
+}
+
+#tableWrapper table {
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0;
+}
+
+#parsedTable th,
+#parsedTable td {
+	border: 1px solid #000;
+	padding: 8px;
+	text-align: left;
+	min-width: 100px;
+}
+
+#parsedTable th {
+	background-color: #f2f2f2;
+}
