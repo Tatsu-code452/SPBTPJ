@@ -1,9 +1,9 @@
 import { splitTextByBreakeLine } from "./common/common.js";
 import { loadCsv, parseCSV } from "./common/csvUtils.js";
 import {
-    initializeDragAndDrop,
-    initializeButton,
-    initializeTextArea,
+    setDragAndDrop,
+    setClickEvent,
+    setInputEvent,
 } from "./common/eventUtils.js";
 import { createHeader, createBody } from "./common/tableUtils.js";
 
@@ -11,11 +11,11 @@ document.addEventListener("DOMContentLoaded", initialize);
 
 // 初期化処理
 function initialize() {
-    initializeDragAndDrop("#drop-area", createTable);
-    initializeTextArea("#textArea", () =>
+    setDragAndDrop("#drop-area", createTable);
+    setInputEvent("#textArea", () =>
         splitTextArea(document.querySelector("#textArea"))
     );
-    initializeButton("#loadFileButton", handleLoadFileClick);
+    setClickEvent("#loadFileButton", handleLoadFileClick);
     loadCsv("./data/parser/parse.csv", createTable);
     fetchFileList();
 }

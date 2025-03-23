@@ -1,8 +1,8 @@
 import { formatDateForInput, formatDate } from "./common/common.js";
 import { parseCSV } from "./common/csvUtils.js";
 import {
-    initializeDragAndDrop,
-    initializeButton,
+    setDragAndDrop,
+    setClickEvent,
 } from "./common/eventUtils.js";
 
 import { createInputCell } from "./common/tableUtils.js";
@@ -12,8 +12,8 @@ document.addEventListener("DOMContentLoaded", initialize);
 
 // 初期化処理
 function initialize() {
-    initializeDragAndDrop("#drop-area", handleCsvDrop);
-    initializeButton("#download-ical", handleDownloadClick);
+    setDragAndDrop("#drop-area", handleCsvDrop);
+    setClickEvent("#download-ical", handleDownloadClick);
     setTaskTableEvent();
     document
         .querySelector("#task-table")

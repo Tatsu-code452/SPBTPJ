@@ -1,13 +1,5 @@
 import { readFile } from "./csvUtils.js";
 
-// 初期化処理を共通化
-function initializeDragAndDrop(dropAreaSelector, callback) {
-    const dropArea = document.querySelector(dropAreaSelector);
-    if (dropArea) {
-        setDragAndDrop(dropArea, callback);
-    }
-}
-
 // クリックイベント設定
 function setClickEvent(target, callback) {
     const element =
@@ -17,24 +9,21 @@ function setClickEvent(target, callback) {
     }
 }
 
-function initializeButton(buttonSelector, callback) {
-    const button = document.querySelector(buttonSelector);
-    if (button) {
-        button.addEventListener("click", callback);
-    }
-}
-
-function initializeTextArea(textAreaSelector, callback) {
-    const textArea = document.querySelector(textAreaSelector);
-    if (textArea) {
-        textArea.addEventListener("input", callback);
+// 入力イベント設定
+function setInputEvent(target, callback) {
+    const element =
+        typeof target === "string" ? document.querySelector(target) : target;
+    if (element) {
+        element.addEventListener("input", callback);
     }
 }
 
 // ドラッグアンドドロップ設定
-function setDragAndDrop(dropArea, callback) {
+function setDragAndDrop(target, callback) {
+    const element =
+        typeof target === "string" ? document.querySelector(target) : target;
     ["dragover", "dragleave", "drop"].forEach((eventType) => {
-        dropArea.addEventListener(eventType, (event) =>
+        element.addEventListener(eventType, (event) =>
             handleDragEvent(event, callback)
         );
     });
@@ -69,10 +58,4 @@ function toggleHighlight(event, highlight) {
     event.currentTarget.classList.toggle("highlight", highlight);
 }
 
-export {
-    setDragAndDrop,
-    setClickEvent,
-    initializeDragAndDrop,
-    initializeButton,
-    initializeTextArea,
-};
+export { setDragAndDrop, setClickEvent, setInputEvent };

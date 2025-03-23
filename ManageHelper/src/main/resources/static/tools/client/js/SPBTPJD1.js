@@ -6,8 +6,8 @@ import {
     updateSelectionDisplay,
 } from "./common/svgUtils.js";
 import {
-    initializeDragAndDrop,
-    initializeButton,
+    setDragAndDrop,
+    setClickEvent,
 } from "./common/eventUtils.js";
 
 // 画面表示時
@@ -15,9 +15,9 @@ document.addEventListener("DOMContentLoaded", initialize);
 
 // 初期化処理
 function initialize() {
-    initializeDragAndDrop("#drop-area", viewSvg);
-    initializeButton("#zoomIn", () => zoomSvg(0.2));
-    initializeButton("#zoomOut", () => zoomSvg(-0.2));
+    setDragAndDrop("#drop-area", viewSvg);
+    setClickEvent("#zoomIn", () => zoomSvg(0.2));
+    setClickEvent("#zoomOut", () => zoomSvg(-0.2));
     loadCsv("./data/data.csv", viewSvg);
 }
 
