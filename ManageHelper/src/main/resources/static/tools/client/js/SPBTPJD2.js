@@ -1,20 +1,20 @@
+import { splitTextByBreakeLine } from "./common.js";
+import { loadCsv, parseCSV } from "./csvUtils.js";
 import {
-    loadCsv,
-    parseCSV,
-    splitTextByBreakeLine,
-    createHeader,
-    createBody,
     initializeDragAndDrop,
     initializeButton,
     initializeTextArea,
-} from "./common.js";
+} from "./eventUtils.js";
+import { createHeader, createBody } from "./tableUtils.js";
 
 document.addEventListener("DOMContentLoaded", initialize);
 
 // 初期化処理
 function initialize() {
     initializeDragAndDrop("#drop-area", createTable);
-    initializeTextArea("#textArea", () => splitTextArea(document.querySelector("#textArea")));
+    initializeTextArea("#textArea", () =>
+        splitTextArea(document.querySelector("#textArea"))
+    );
     initializeButton("#loadFileButton", handleLoadFileClick);
     loadCsv("./data/parser/parse.csv", createTable);
     fetchFileList();
@@ -93,7 +93,9 @@ async function fetchFileList() {
     try {
         const response = await fetch("./data/parser/");
         if (!response.ok) {
-            console.error(`Failed to fetch file list. Status: ${response.status}`);
+            console.error(
+                `Failed to fetch file list. Status: ${response.status}`
+            );
             throw new Error("Failed to fetch file list");
         }
         const csvData = await response.text();

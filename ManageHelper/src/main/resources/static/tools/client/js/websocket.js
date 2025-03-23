@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", initializeWebSocket);
 
 // WebSocket初期化処理
 function initializeWebSocket() {
-    setupWebSocketHandlers();
+    setupWebSocketHandlers(ws, "messages");
     setupSendButtonHandler(
         "sendButton",
         "messageInput",
@@ -17,15 +17,18 @@ function initializeWebSocket() {
     );
 }
 
-// WebSocket関連のイベントハンドラを設定
-function setupWebSocketHandlers() {
+// WebSocket関連のイベントハンドラを共通化
+function setupWebSocketHandlers(ws, outputId) {
     ws.addEventListener("open", () =>
-        appendMessage("messages", "WebSocket接続が確立されました。")
+        appendMessage(outputId, "WebSocket接続が確立されました。")
     );
     ws.addEventListener("message", (event) =>
-        appendMessage("messages", `サーバー: ${event.data}`)
+        appendMessage(outputId, `サーバー: ${event.data}`)
     );
     ws.addEventListener("close", () =>
-        appendMessage("messages", "WebSocket接続が閉じられました。")
+        appendMessage(outputId, "WebSocket接続が閉じられました。")
+    );
+    ws.addEventListener("error", (error) =>
+        console.error("WebSocketエラー:", error)
     );
 }

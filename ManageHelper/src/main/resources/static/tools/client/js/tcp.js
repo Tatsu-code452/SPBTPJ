@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", initializeTcp);
 
 // TCP初期化処理
 function initializeTcp() {
-    setupWebSocketHandlers();
+    setupWebSocketHandlers(ws, "tcpMessages");
     setupSendButtonHandler(
         "tcpSendButton",
         "tcpMessageInput",
@@ -17,15 +17,18 @@ function initializeTcp() {
     );
 }
 
-// WebSocket関連のイベントハンドラを設定
-function setupWebSocketHandlers() {
+// WebSocket関連のイベントハンドラを共通化
+function setupWebSocketHandlers(ws, outputId) {
     ws.addEventListener("open", () =>
-        appendMessage("tcpMessages", "WebSocket(TCP)接続が確立されました。")
+        appendMessage(outputId, "WebSocket(TCP)接続が確立されました。")
     );
     ws.addEventListener("message", (event) =>
-        appendMessage("tcpMessages", `サーバー(TCP): ${event.data}`)
+        appendMessage(outputId, `サーバー(TCP): ${event.data}`)
     );
     ws.addEventListener("close", () =>
-        appendMessage("tcpMessages", "WebSocket(TCP)接続が閉じられました。")
+        appendMessage(outputId, "WebSocket(TCP)接続が閉じられました。")
+    );
+    ws.addEventListener("error", (error) =>
+        console.error("WebSocketエラー:", error)
     );
 }

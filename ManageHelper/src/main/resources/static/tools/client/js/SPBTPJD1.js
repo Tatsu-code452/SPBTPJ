@@ -1,12 +1,11 @@
+import { loadCsv } from "./csvUtils.js";
 import {
-    loadCsv,
     createSvg,
     resizeSvg,
     createSvgGroup,
     updateSelectionDisplay,
-    initializeDragAndDrop,
-    initializeButton,
-} from "./common.js";
+} from "./svgUtils.js";
+import { initializeDragAndDrop, initializeButton } from "./eventUtils.js";
 
 // 画面表示時
 document.addEventListener("DOMContentLoaded", initialize);
