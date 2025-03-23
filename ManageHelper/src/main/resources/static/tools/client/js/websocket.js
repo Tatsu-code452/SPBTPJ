@@ -1,4 +1,4 @@
-import { setupSendButtonHandler, appendMessage } from "./common.js";
+import { setupSendButtonHandler, appendMessage } from "./common/common.js";
 
 const ws = new WebSocket(`ws://${location.host}`);
 

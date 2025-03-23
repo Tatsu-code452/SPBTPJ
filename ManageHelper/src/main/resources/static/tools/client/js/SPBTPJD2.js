@@ -1,11 +1,11 @@
-import { splitTextByBreakeLine } from "./common.js";
-import { loadCsv, parseCSV } from "./csvUtils.js";
+import { splitTextByBreakeLine } from "./common/common.js";
+import { loadCsv, parseCSV } from "./common/csvUtils.js";
 import {
     initializeDragAndDrop,
     initializeButton,
     initializeTextArea,
-} from "./eventUtils.js";
-import { createHeader, createBody } from "./tableUtils.js";
+} from "./common/eventUtils.js";
+import { createHeader, createBody } from "./common/tableUtils.js";
 
 document.addEventListener("DOMContentLoaded", initialize);
 

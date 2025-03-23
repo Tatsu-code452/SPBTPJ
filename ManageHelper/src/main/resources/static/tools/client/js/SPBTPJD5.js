@@ -1,6 +1,6 @@
-import { loadCsv } from "./csvUtils.js";
-import { createHeader, createBody } from "./tableUtils.js";
-import { setClickEvent } from "./eventUtils.js";
+import { loadCsv } from "./common/csvUtils.js";
+import { createHeader, createBody } from "./common/tableUtils.js";
+import { setClickEvent } from "./common/eventUtils.js";
 
 // CSVデータを保持するグローバル変数
 let csvHeader = [];
