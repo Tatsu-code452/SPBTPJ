@@ -20,13 +20,13 @@ function initializeWebSocket() {
 // WebSocket関連のイベントハンドラを共通化
 function setupWebSocketHandlers(ws, outputId) {
     ws.addEventListener("open", () =>
-        appendMessage(outputId, "WebSocket接続が確立されました。")
+        appendMessage(outputId, "WebSocket接続")
     );
     ws.addEventListener("message", (event) =>
         appendMessage(outputId, `サーバー: ${event.data}`)
     );
     ws.addEventListener("close", () =>
-        appendMessage(outputId, "WebSocket接続が閉じられました。")
+        appendMessage(outputId, "WebSocket切断")
     );
     ws.addEventListener("error", (error) =>
         console.error("WebSocketエラー:", error)

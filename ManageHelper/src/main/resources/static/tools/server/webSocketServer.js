@@ -5,23 +5,27 @@ function createWebSocketServer(server) {
 
     // WebSocket接続時の処理
     wss.on("connection", (ws) => {
-        console.log("WebSocket connection established");
+        console.log("WebSocket接続");
 
         // クライアントからのメッセージ受信時の処理
         ws.on("message", (message) => {
-            console.log("Received message:", message);
-            // 必要に応じて処理を追加
+            const text = JSON.parse(message.toString()).message;
+            console.log("WebSocket受信:", text);
+            console.log("WebSocket送信:", text);
+            ws.send(text);
         });
 
         // 接続が閉じられた場合の処理
         ws.on("close", () => {
-            console.log("WebSocket connection closed");
+            console.log("WebSocket切断");
         });
 
         // サーバーから定期的にメッセージを送信
         const intervalId = setInterval(() => {
             if (ws.readyState === WebSocket.OPEN) {
-                ws.send("サーバーからの定期メッセージ");
+                const message = "サーバーからの定期メッセージ";
+                console.log("WebSocket送信:", message);
+                ws.send(message);
             }
         }, 5000);
 

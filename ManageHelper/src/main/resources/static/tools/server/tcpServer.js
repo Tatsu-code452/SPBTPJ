@@ -2,17 +2,17 @@ const net = require("net");
 
 function createTcpServer(port) {
     const server = net.createServer((socket) => {
-        console.log("クライアントが接続しました。");
+        console.log("クライアント接続");
 
         // クライアントからデータを受信したときの処理
         socket.on("data", (data) => {
-            console.log("クライアントから受信:", data.toString());
-            socket.write(`サーバーからの応答: ${data.toString()}`);
+            console.log("クライアント受信:", data.toString());
+            socket.write(`サーバー応答: ${data.toString()}`);
         });
 
         // クライアントが切断したときの処理
         socket.on("end", () => {
-            console.log("クライアントが切断しました。");
+            console.log("クライアント切断");
         });
 
         // エラー発生時の処理
@@ -23,7 +23,7 @@ function createTcpServer(port) {
 
     // サーバーを指定したポートで待機
     server.listen(port, () => {
-        console.log(`TCPサーバーがポート${port}で待機中...`);
+        console.log(`接続待ち ポート${port}`);
     });
 
     return server;
