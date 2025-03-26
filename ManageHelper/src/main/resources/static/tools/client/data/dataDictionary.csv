@@ -1,0 +1,9 @@
+﻿和名,変数名,Java型,Java桁数,Javaフォーマット,DB2型,DB2桁数,DB2フォーマット
+識別子,id,int,10,,INT,10,
+名前,name,String,50,,VARCHAR,50,
+年齢,age,int,3,,INT,3,
+住所,address,String,100,,VARCHAR,100,
+メールアドレス,email,String,100,,VARCHAR,100,
+電話番号,phoneNumber,String,15,,VARCHAR,15,
+登録日,registrationDate,LocalDate,,yyyy-MM-dd'T'HH:mm:ss.SSS,DATE,,TIMESTAMP
+アクティブ状態,isActive,boolean,,,BOOLEAN,,

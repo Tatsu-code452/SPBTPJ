@@ -1,3 +1,4 @@
 /.metadata/
 /Servers/*
 **/node_modules/
+**/dist/

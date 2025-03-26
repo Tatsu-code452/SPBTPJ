@@ -4,11 +4,15 @@
   "description": "A simple Electron application",
   "main": "native/main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "package": "electron-packager . MyApp --platform=win32 --arch=x64 --out=dist --overwrite"
   },
   "author": "Your Name",
   "license": "MIT",
   "devDependencies": {
     "electron": "^25.9.8"
+  },
+  "dependencies": {
+    "electron-packager": "^15.2.0"
   }
 }
