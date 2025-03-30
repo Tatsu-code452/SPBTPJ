@@ -1,5 +1,17 @@
 import { readFile } from "./csvUtils.js";
 
+// イベント設定
+function setEvent(target, event, callback) {
+    const element =
+        typeof target === "string" ? document.querySelector(target) : target;
+    if (element) {
+        element.addEventListener(event, (e) => {
+            e.preventDefault();
+            callback(e);
+        });
+    }
+}
+
 // クリックイベント設定
 function setClickEvent(target, callback) {
     const element =
@@ -58,4 +70,4 @@ function toggleHighlight(event, highlight) {
     event.currentTarget.classList.toggle("highlight", highlight);
 }
 
-export { setDragAndDrop, setClickEvent, setInputEvent };
+export { setDragAndDrop, setClickEvent, setInputEvent, setEvent };

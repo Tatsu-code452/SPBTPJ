@@ -1,0 +1,41 @@
+.chart-container {
+    width: 90vw;
+    overflow: scroll;
+    border: 1px solid #ccc;
+    margin: 20px auto;
+}
+
+.grid-row {
+    display: grid;
+    position: relative;
+    grid-template-columns: 150px 120px 120px repeat(60, 40px);
+}
+
+.grid-row div {
+    padding: 5px;
+    border-left: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.grid-row-header div {
+    background-color: #f0f0f0;
+    box-sizing: border-box;
+}
+
+.label,
+.name,
+.start,
+.end {
+    text-align: right;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.bar {
+    position: absolute;
+    background-color: #4CAF50;
+    height: 20px;
+    align-self: center;
+}
