@@ -1,5 +1,5 @@
 import componentModule from "./common/componentModule.js";
-import csvModule from "./common/csvModule.js";
+import { loadCsv, parseCSV } from "./common/csvUtils.js";
 import { setDragAndDrop } from "./common/eventUtils.js";
 
 let tasks = [];
@@ -12,12 +12,12 @@ document.addEventListener("DOMContentLoaded", initialize);
 
 // 初期化処理
 function initialize() {
-    setDragAndDrop("#drop-area", ([header, ...data]) => {
+    setDragAndDrop("#drop-area", (data) => {
         tasks = createTaskData(data);
         createTaskGrid(totalDays, tasks);
     });
     componentModule.addEventListenerById("#drop-area", "paste", (event) => {
-        const data = csvModule.parseCSV(event.clipboardData.getData("text"));
+        const data = parseCSV(event.clipboardData.getData("text"));
         tasks = createTaskData(data);
         createTaskGrid(totalDays, tasks);
     });
@@ -31,23 +31,28 @@ function initialize() {
         }
     );
 
+    loadCsv("./data/taskList.csv", ([header, ...data]) => {
+        tasks = createTaskData(data);
+        createTaskGrid(totalDays, tasks);
+    });
     const startInputDate = document.querySelector("#start-date-input");
     startInputDate.value = getInitialDate();
     startDate = new Date(startInputDate.value);
     createTaskHeader(totalDays);
-    createTaskGrid(totalDays, tasks);
 }
 
 // タスクデータ作成
 function createTaskData(data) {
-    return data.map((row) => {
-        return {
-            name: row[0],
-            start: row[1],
-            end: row[2],
-            progressRate: row[3],
-        };
-    });
+    return data.map(
+        ([name, start, end, startActual, endActual, progressRate]) => ({
+            name,
+            start,
+            end,
+            startActual,
+            endActual,
+            progressRate,
+        })
+    );
 }
 
 // ヘッダー行を生成
@@ -67,10 +72,17 @@ function createTaskHeader(totalDays) {
     headerElement.innerHTML = "";
 
     const className = "grid-row grid-row-header";
-    const yearRow = createHeaderRow(["", "", ""], className);
-    const monthRow = createHeaderRow(["", "", ""], className);
+    const yearRow = createHeaderRow(["", "", "", "", "", ""], className);
+    const monthRow = createHeaderRow(["", "", "", "", "", ""], className);
     const dayRow = createHeaderRow(
-        ["Task Name", "Start Date", "End Date"],
+        [
+            "Task Name",
+            "Start Date",
+            "End Date",
+            "Start Date",
+            "End Date",
+            "Progress",
+        ],
         className
     );
     headerElement.appendChild(yearRow);
@@ -150,7 +162,14 @@ function createTaskGrid(totalDays, tasks) {
         gridElement.appendChild(row);
 
         // タスク情報（名前、開始日、終了日）
-        ["name", "start", "end"].forEach((key) => {
+        [
+            "name",
+            "start",
+            "end",
+            "startActual",
+            "endActual",
+            "progressRate",
+        ].forEach((key) => {
             row.appendChild(
                 componentModule.createElement("div", {
                     className: key,
@@ -188,10 +207,28 @@ function createTaskBar(task, cellWidth, cellLeft) {
         Math.floor((taskEnd - taskStart) / (1000 * 60 * 60 * 24)) + 1
     );
 
+    const barWidth = (cellWidth + 1) * duration + 1;
+    const barLeft = cellLeft + startOffset * (cellWidth + 1) + 1;
     const bar = componentModule.createElement("div", { className: "bar" });
-    bar.style.width = `${(cellWidth + 1) * duration + 1}px`;
-    bar.style.left = `${cellLeft + startOffset * (cellWidth + 1)}px`;
+    bar.style.width = `${barWidth}px`;
+    bar.style.left = `${barLeft}px`;
     bar.draggable = "true";
+
+    // 進捗率に基づいて内部のプログレスバーを作成
+    if (task.startActual !== "") {
+        const taskStartActual = new Date(task.startActual);
+        const progressBar = componentModule.createElement("div", {
+            className: "progress-bar",
+        });
+        const startActualOffset = Math.floor(
+            (taskStartActual - taskStart) / (1000 * 60 * 60 * 24)
+        );
+        const barLeftActual = startActualOffset * (cellWidth + 1) - 0.8;
+        progressBar.style.width = `calc(${task.progressRate} + 1px)`;
+        progressBar.style.left = ` ${barLeftActual}px`;
+
+        bar.appendChild(progressBar);
+    }
     return bar;
 }
 
@@ -199,6 +236,6 @@ function createTaskBar(task, cellWidth, cellLeft) {
 function getInitialDate() {
     const today = new Date();
     const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, "0"); // 月を2桁に
-    return `${year}-${month}-01`;
+    const month = String(today.getMonth()).padStart(2, "0"); // 月を2桁に
+    return `${year}-${month}-25`;
 }

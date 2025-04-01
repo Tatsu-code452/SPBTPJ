@@ -3,12 +3,13 @@
     overflow: scroll;
     border: 1px solid #ccc;
     margin: 20px auto;
+    font-size: 0.5em;
 }
 
 .grid-row {
     display: grid;
     position: relative;
-    grid-template-columns: 150px 120px 120px repeat(60, 40px);
+    grid-template-columns: 100px repeat(5, 80px) repeat(60, 40px);
 }
 
 .grid-row div {
@@ -26,7 +27,10 @@
 .label,
 .name,
 .start,
-.end {
+.startActual,
+.end,
+.endActual,
+.progressRate {
     text-align: right;
     padding: 10px;
     display: flex;
@@ -35,7 +39,15 @@
 
 .bar {
     position: absolute;
-    background-color: #4CAF50;
+    background-color: #d3d3d3;
     height: 20px;
     align-self: center;
+}
+
+.progress-bar {
+    position: absolute;
+    background-color: #4CAF50;
+    height: 10px;
+    align-self: center;
+    top: 0px;
 }
