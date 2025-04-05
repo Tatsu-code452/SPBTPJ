@@ -1,7 +1,6 @@
 package com.manage.helper.SPBTPJ2.BusinessLogic.Logic;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -13,6 +12,7 @@ import com.manage.helper.DAO.FilePathGroupDao;
 import com.manage.helper.DAO.DaoModel.FilePathGroupDto;
 import com.manage.helper.SPBTPJ2.Model.SPBTPJ2_UpdateBDto;
 import com.manage.helper.SPBTPJ2.ViewModel.SPBTPJ2_TableInputData;
+import com.manage.helperUtil.ComparatorUtils;
 
 import lombok.RequiredArgsConstructor;
 
@@ -52,7 +52,7 @@ public class SPBTPJ2_UpdateLogic extends BaseLogic<SPBTPJ2_UpdateBDto> {
 		// 入力後の順番で、削除対象外のデータをリストに追加
 		sortedInputOrderList.stream().forEach(n -> {
 			if (!n.isChecked()) {
-				result.add(createFilePathGroup(filePathGroupMap.get(n.getGroupId()), result.size() + 1));
+				result.add(createFilePathGroup(filePathGroupMap.get(n.getGroupId()), result.size() + 1, n.getGroup()));
 			}
 
 			// リスト追加後、マップから削除
@@ -61,19 +61,22 @@ public class SPBTPJ2_UpdateLogic extends BaseLogic<SPBTPJ2_UpdateBDto> {
 
 		// マップの残りをリストに追加
 		if (!filePathGroupMap.isEmpty()) {
-			filePathGroupMap.values().stream().forEach(n -> result.add(createFilePathGroup(n, result.size() + 1)));
+			filePathGroupMap.values().stream()
+					.forEach(n -> result.add(createFilePathGroup(n, result.size() + 1, n.getGroup())));
 		}
 
 		return result;
 	}
 
 	private List<SPBTPJ2_TableInputData> getSortedInputOrderList(List<SPBTPJ2_TableInputData> inputGroupList) {
-		return inputGroupList.stream().sorted(Comparator.comparing(SPBTPJ2_TableInputData::getOrder))
+		return inputGroupList.stream()
+				.sorted(ComparatorUtils.comparingNaturalOrderNullsLast(SPBTPJ2_TableInputData::getOrder))
 				.collect(Collectors.toList());
 	}
 
-	private FilePathGroupDto createFilePathGroup(FilePathGroupDto base, Integer order) {
+	private FilePathGroupDto createFilePathGroup(FilePathGroupDto base, Integer order, String group) {
 		base.setOrder(order);
+		base.setGroup(group);
 		return base;
 	}
 }

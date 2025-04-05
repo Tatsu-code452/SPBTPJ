@@ -30,16 +30,26 @@
 				<tbody class="table-group-divider draggableWrap">
 					<tr th:each="elmGroup, st: ${viewModel.filePathGroupList}"
 						draggable="true" class="draggableRow">
-						<td><input type="checkbox"
-								th:field="*{inputGroupList[__${st.index}__].checked}" /></td>
+						<td>
+							<input type="checkbox"
+								th:field="*{inputGroupList[__${st.index}__].checked}" />
+						</td>
 						<td th:text="${elmGroup.order}" class="disp-order"></td>
 						<td th:text="${elmGroup.groupId}" class="disp-groupId"></td>
-						<td th:text="${elmGroup.group}"></td>
-						<td th:hidden="hidden"><input type="text" class="input-order"
-								th:field="*{inputGroupList[__${st.index}__].order}" /></td>
-						<td th:hidden="hidden"><input type="text"
-								class="input-groupId"
-								th:field="*{inputGroupList[__${st.index}__].groupId}" /></td>
+						<td>
+							<input type="text" class="input-group"
+								th:field="*{inputGroupList[__${st.index}__].group}" />
+						</td>
+						<td th:hidden="hidden">
+							<input type="text" class="input-order"
+								th:field="*{inputGroupList[__${st.index}__].order}" />
+						</td>
+						<td th:hidden="hidden">
+							<input type="text" class="input-groupId"
+								th:field="*{inputGroupList[__${st.index}__].groupId}" />
+						</td>
+						<td th:hidden="hidden" class="disp-group"
+							th:text="${elmGroup.group}"></td>
 					</tr>
 				</tbody>
 			</table>

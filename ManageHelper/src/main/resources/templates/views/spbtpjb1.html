@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="stylesheet" th:href="@{/css/COMMON.css}">
+<link rel="stylesheet" th:href="@{/css/SPBTPJB1.css}">
+<script type="text/javascript" th:src="@{/js/SPBTPJB1.js}"></script>
+
+<title>タスク</title>
+</head>
+<body class="container">
+	<div id="baseDateWrap" class="custom-div-with-border">
+		<input type="date" id="baseDate">
+	</div>
+	<form action="/spbtpjb1/update" method="post" th:object="${viewModel}">
+		<div id="taskListWrap" class="row">
+			<div class="col-5">
+				<table id="taskTable" class="table table-bordered">
+					<colgroup>
+						<col class="col-group3">
+						<col class="col-group2">
+						<col class="col-group2">
+						<col class="col-group">
+					</colgroup>
+					<thead>
+						<tr>
+							<td rowspan="2">タスク名</td>
+							<td>開始日(予定)</td>
+							<td>終了日(予定)</td>
+							<td rowspan="2">進捗率</td>
+						</tr>
+						<tr>
+							<td>開始日(実績)</td>
+							<td>終了日(実績)</td>
+						</tr>
+					</thead>
+					<tbody>
+						<th:block th:each="task, st: ${viewModel.taskList}"
+							th:object="${viewModel.taskList[__${st.index}__]}">
+							<tr class="expectedRow">
+								<td rowspan="2">
+									<input type="hidden" th:field="*{taskId}" />
+									<input type="text" th:field="*{taskName}" />
+								</td>
+								<td class="startDate">
+									<input type="date" th:field="*{expectedStartDate}">
+								</td>
+								<td class="endDate">
+									<input type="date" th:field="*{expectedEndDate}">
+								</td>
+								<td rowspan="2">
+									<input type="text" th:field="*{progressRate}" />
+								</td>
+							</tr>
+							<tr class="actualRow">
+								<td class="startDate">
+									<input type="date" th:field="*{actualStartDate}">
+								</td>
+								<td class="endDate">
+									<input type="date" th:field="*{actualEndDate}">
+								</td>
+							</tr>
+						</th:block>
+					</tbody>
+				</table>
+			</div>
+			<div class="overflow-scroll col-7">
+				<table id="ganttTable" class="table table-bordered">
+					<thead>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<button type="submit" class="custom-btn">反映</button>
+
+	</form>
+</body>
+</html>

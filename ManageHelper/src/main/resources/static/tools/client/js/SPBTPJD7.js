@@ -1,6 +1,6 @@
 import componentModule from "./common/componentModule.js";
-import { loadCsv, parseCSV } from "./common/csvUtils.js";
-import { setDragAndDrop } from "./common/eventUtils.js";
+import csvModule from "./common/csvModule.js";
+import eventModule from "./common/eventModule.js";
 
 let tasks = [];
 
@@ -12,12 +12,12 @@ document.addEventListener("DOMContentLoaded", initialize);
 
 // 初期化処理
 function initialize() {
-    setDragAndDrop("#drop-area", (data) => {
+    eventModule.setDragAndDrop("#drop-area", (data) => {
         tasks = createTaskData(data);
         createTaskGrid(totalDays, tasks);
     });
     componentModule.addEventListenerById("#drop-area", "paste", (event) => {
-        const data = parseCSV(event.clipboardData.getData("text"));
+        const data = csvModule.parseCSV(event.clipboardData.getData("text"));
         tasks = createTaskData(data);
         createTaskGrid(totalDays, tasks);
     });
@@ -31,7 +31,7 @@ function initialize() {
         }
     );
 
-    loadCsv("./data/taskList.csv", ([header, ...data]) => {
+    csvModule.loadCsv("./data/taskList.csv", ([header, ...data]) => {
         tasks = createTaskData(data);
         createTaskGrid(totalDays, tasks);
     });

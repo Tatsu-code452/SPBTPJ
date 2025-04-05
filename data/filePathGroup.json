@@ -1,14 +1,5 @@
-[
-    {
-        "groupId": "1",
-        "group": "AAA"
-    },
-    {
-        "groupId": "2",
-        "group": "BBB"
-    },
-    {
-        "groupId": "3",
-        "group": "CCC"
-    }
-]
+[ {
+  "groupId" : "1",
+  "group" : "AAA",
+  "order" : 1
+} ]

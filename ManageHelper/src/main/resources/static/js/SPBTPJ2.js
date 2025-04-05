@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
 			item.querySelector(".disp-groupId"),
 			item.querySelector('.input-groupId'));
 		setDispToInput(
+			item.querySelector(".disp-group"),
+			item.querySelector('.input-group'));
+		setDispToInput(
 			item.querySelector(".disp-order"),
 			item.querySelector('.input-order'));
 	});

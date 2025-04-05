@@ -6,7 +6,7 @@ const csvModule = {
             if (!response.ok)
                 throw new Error(`HTTP error! status: ${response.status}`);
             const text = await response.text();
-            callback(parseCSV(text));
+            callback(this.parseCSV(text));
         } catch (error) {
             console.error("Error loading CSV:", error);
         }

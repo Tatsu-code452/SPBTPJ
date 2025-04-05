@@ -11,4 +11,5 @@ public class SPBTPJ2_TableInputData {
 	private boolean checked;
 	private Integer order;
 	private String groupId;
+	private String group;
 }

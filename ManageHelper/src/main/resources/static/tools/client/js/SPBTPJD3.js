@@ -1,19 +1,15 @@
 import { formatDateForInput, formatDate } from "./common/common.js";
-import { parseCSV } from "./common/csvUtils.js";
-import {
-    setDragAndDrop,
-    setClickEvent,
-} from "./common/eventUtils.js";
-
-import { createInputCell } from "./common/tableUtils.js";
+import csvModule from "./common/csvModule.js";
+import eventModule from "./common/eventModule.js";
+import tableModule from "./common/tableModule.js";
 
 // 画面表示時
 document.addEventListener("DOMContentLoaded", initialize);
 
 // 初期化処理
 function initialize() {
-    setDragAndDrop("#drop-area", handleCsvDrop);
-    setClickEvent("#download-ical", handleDownloadClick);
+    eventModule.setDragAndDrop("#drop-area", handleCsvDrop);
+    eventModule.setEvent("#download-ical", "click", handleDownloadClick);
     setTaskTableEvent();
     document
         .querySelector("#task-table")
@@ -35,12 +31,18 @@ function handleCsvDrop(data) {
     tbody.innerHTML = ""; // 既存の行をクリア
     tasks.forEach((task) => {
         const newRow = document.createElement("tr");
-        newRow.appendChild(createInputCell("text", task.name));
+        newRow.appendChild(tableModule.createInputCell("text", task.name));
         newRow.appendChild(
-            createInputCell("datetime-local", formatDateForInput(task.start))
+            tableModule.createInputCell(
+                "datetime-local",
+                formatDateForInput(task.start)
+            )
         );
         newRow.appendChild(
-            createInputCell("datetime-local", formatDateForInput(task.end))
+            tableModule.createInputCell(
+                "datetime-local",
+                formatDateForInput(task.end)
+            )
         );
         tbody.appendChild(newRow);
     });
@@ -49,9 +51,9 @@ function handleCsvDrop(data) {
 // テンプレート行作成
 function templateRow() {
     const newRow = document.createElement("tr");
-    newRow.appendChild(createInputCell("text"));
-    newRow.appendChild(createInputCell("datetime-local"));
-    newRow.appendChild(createInputCell("datetime-local"));
+    newRow.appendChild(tableModule.createInputCell("text"));
+    newRow.appendChild(tableModule.createInputCell("datetime-local"));
+    newRow.appendChild(tableModule.createInputCell("datetime-local"));
     document.querySelector("#task-table tbody").appendChild(newRow);
     newRow.querySelector("input").focus(); // 新しい行の最初の入力にフォーカス
 }
@@ -142,18 +144,24 @@ function createICal(tasks) {
 
 function handlePaste(event) {
     event.preventDefault(); // デフォルトのペースト動作を防ぐ
-    const rows = parseCSV(event.clipboardData.getData("text"));
+    const rows = csvModule.parseCSV(event.clipboardData.getData("text"));
     const tbody = document.querySelector("#task-table tbody");
 
     rows.forEach((cols) => {
         if (cols.length >= 3) {
             const newRow = document.createElement("tr");
-            newRow.appendChild(createInputCell("text", cols[0])); // タスク名
+            newRow.appendChild(tableModule.createInputCell("text", cols[0])); // タスク名
             newRow.appendChild(
-                createInputCell("datetime-local", formatDateForInput(cols[1]))
+                tableModule.createInputCell(
+                    "datetime-local",
+                    formatDateForInput(cols[1])
+                )
             ); // 開始日時
             newRow.appendChild(
-                createInputCell("datetime-local", formatDateForInput(cols[2]))
+                tableModule.createInputCell(
+                    "datetime-local",
+                    formatDateForInput(cols[2])
+                )
             ); // 終了日時
             tbody.appendChild(newRow);
         }

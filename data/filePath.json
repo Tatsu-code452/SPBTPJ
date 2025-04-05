@@ -1,1 +1,10 @@
-[{"groupId":"1","pathList":[{"name":"C:\\workspace\\web\\SPBTPJ\\data","path":"C:\\workspace\\web\\SPBTPJ\\data","encodePath":"C%3A%5Cworkspace%5Cweb%5CSPBTPJ%5Cdata"},{"name":"C:\\workspace\\web\\SPBTPJ","path":"C:\\workspace\\web\\SPBTPJ","encodePath":"C%3A%5Cworkspace%5Cweb%5CSPBTPJ"}]},{"groupId":"2","pathList":[{"name":"C:\\workspace","path":"C:\\workspace","encodePath":"C%3A%5Cworkspace"},{"name":"C:\\workspace\\web\\SPBTPJ\\data\\filePath.json","path":"C:\\workspace\\web\\SPBTPJ\\data\\filePath.json","encodePath":"C%3A%5Cworkspace%5Cweb%5CSPBTPJ%5Cdata%5CfilePath.json"}]},{"groupId":"3","pathList":[{"name":"C:\\Users\\Owner\\Desktop\\git管理方法.xlsx","path":"C:\\Users\\Owner\\Desktop\\git管理方法.xlsx","encodePath":"C%3A%5CUsers%5COwner%5CDesktop%5Cgit%E7%AE%A1%E7%90%86%E6%96%B9%E6%B3%95.xlsx"},{"name":"C:\\workspace\\web\\SPBTPJ\\data","path":"C:\\workspace\\web\\SPBTPJ\\data","encodePath":"C%3A%5Cworkspace%5Cweb%5CSPBTPJ%5Cdata"}]}]
+[ {
+  "groupId" : "2",
+  "pathList" : [ ]
+}, {
+  "groupId" : "1",
+  "pathList" : [ ]
+}, {
+  "groupId" : "3",
+  "pathList" : [ ]
+} ]

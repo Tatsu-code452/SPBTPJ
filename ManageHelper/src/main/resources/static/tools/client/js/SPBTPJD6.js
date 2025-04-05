@@ -1,6 +1,6 @@
-import { loadCsv } from "./common/csvUtils.js";
-import { createHeader, createBody } from "./common/tableUtils.js";
-import { setDragAndDrop } from "./common/eventUtils.js";
+import csvModule from "./common/csvModule.js";
+import tableModule from "./common/tableModule.js";
+import eventModule from "./common/eventModule.js";
 
 // CSVデータを保持するグローバル変数
 let csvHeader = [];
@@ -11,10 +11,10 @@ document.addEventListener("DOMContentLoaded", initialize);
 
 // 初期化処理
 function initialize() {
-    setDragAndDrop("#drop-area", ([header, ...data]) => {
+    eventModule.setDragAndDrop("#drop-area", ([header, ...data]) => {
         renderTable(header, data);
     });
-    loadCsv("./data/dataDictionary.csv", ([header, ...data]) => {
+    csvModule.loadCsv("./data/dataDictionary.csv", ([header, ...data]) => {
         renderTable(header, data);
     });
 }
@@ -28,11 +28,11 @@ function renderTable(header, data) {
     table.id = "parsedTable";
 
     // ヘッダー生成
-    const headerElem = createHeader(csvHeader);
+    const headerElem = tableModule.createHeader(csvHeader);
     table.appendChild(headerElem);
 
     // ボディ生成
-    table.appendChild(createBody(csvData));
+    table.appendChild(tableModule.createBody(csvData));
 
     const tableWrapper = document.querySelector("#tableWrapper");
     tableWrapper.replaceChildren(table);

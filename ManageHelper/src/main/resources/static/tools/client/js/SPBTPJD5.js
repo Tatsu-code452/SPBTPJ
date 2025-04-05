@@ -1,6 +1,6 @@
-import { loadCsv } from "./common/csvUtils.js";
-import { createHeader, createBody } from "./common/tableUtils.js";
-import { setClickEvent } from "./common/eventUtils.js";
+import csvModule from "./common/csvModule.js";
+import tableModule from "./common/tableModule.js";
+import eventModule from "./common/eventModule.js";
 
 // CSVデータを保持するグローバル変数
 let csvHeader = [];
@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", initialize);
 
 // 初期化処理
 function initialize() {
-    loadCsv("./data/table.csv", ([header, ...data]) => {
+    csvModule.loadCsv("./data/table.csv", ([header, ...data]) => {
         csvHeader = header;
         csvData = data;
         renderTable();
@@ -25,13 +25,13 @@ function renderTable() {
     table.id = "parsedTable";
 
     // ヘッダー生成＆イベント登録
-    const headerElem = createHeader(csvHeader);
+    const headerElem = tableModule.createHeader(csvHeader);
     attachHeaderEvents(headerElem);
     addCheckboxesToHeaders(headerElem);
     table.appendChild(headerElem);
 
     // ボディ生成（初回はすべての行を表示）
-    table.appendChild(createBody(csvData));
+    table.appendChild(tableModule.createBody(csvData));
 
     const tableWrapper = document.querySelector("#tableWrapper");
     tableWrapper.replaceChildren(table);
@@ -42,7 +42,7 @@ function attachHeaderEvents(headerElem) {
     const headerCells = headerElem.querySelectorAll("th");
     headerCells.forEach((th) => {
         th.style.cursor = "pointer";
-        setClickEvent(th, () => handleHeaderClick());
+        eventModule.setEvent(th, "click", () => handleHeaderClick());
     });
 }
 
@@ -51,7 +51,7 @@ function handleHeaderClick() {
     selectIdx = getCheckedHeaderIndices();
     updateGroupCondition();
 
-    const tableBody = createBody(groupTableByColumn());
+    const tableBody = tableModule.createBody(groupTableByColumn());
     const table = document.getElementById("parsedTable");
     table.replaceChild(tableBody, table.querySelector("tbody"));
 
