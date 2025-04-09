@@ -33,8 +33,7 @@ public class SPBTPJ2_InitLogic extends BaseLogic<SPBTPJ2_InitBDto> {
 	}
 
 	private List<FilePathGroupDto> createFilePathGroupList() {
-		return filePathGroupList.stream()
-				.sorted(ComparatorUtils.comparingNaturalOrderNullsLast(FilePathGroupDto::getOrder))
+		return filePathGroupList.stream().sorted(ComparatorUtils.ascendingWithNullsLast(FilePathGroupDto::getOrder))
 				.collect(Collectors.toList());
 	}
 }

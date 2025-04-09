@@ -69,8 +69,7 @@ public class SPBTPJ2_UpdateLogic extends BaseLogic<SPBTPJ2_UpdateBDto> {
 	}
 
 	private List<SPBTPJ2_TableInputData> getSortedInputOrderList(List<SPBTPJ2_TableInputData> inputGroupList) {
-		return inputGroupList.stream()
-				.sorted(ComparatorUtils.comparingNaturalOrderNullsLast(SPBTPJ2_TableInputData::getOrder))
+		return inputGroupList.stream().sorted(ComparatorUtils.ascendingWithNullsLast(SPBTPJ2_TableInputData::getOrder))
 				.collect(Collectors.toList());
 	}
 

@@ -52,7 +52,7 @@ public class SPBTPJ3_UpdateLogic extends BaseLogic<SPBTPJ3_UpdateBDto> {
 
 	private List<FilePathInfoDto> createSortedFilePathInfoList(List<SPBTPJ3_InnerTableData> filePathInfoList) {
 		return filePathInfoList.stream().filter(n -> !n.isChecked())
-				.sorted(ComparatorUtils.comparingNaturalOrderNullsLast(SPBTPJ3_InnerTableData::getOrder))
+				.sorted(ComparatorUtils.ascendingWithNullsLast(SPBTPJ3_InnerTableData::getOrder))
 				.map(n -> n.getFilePathInfo()).collect(Collectors.toList());
 	}
 

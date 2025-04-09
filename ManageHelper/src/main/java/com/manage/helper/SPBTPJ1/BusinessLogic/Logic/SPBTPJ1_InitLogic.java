@@ -42,7 +42,7 @@ public class SPBTPJ1_InitLogic extends BaseLogic<SPBTPJ1_InitBDto> {
 
 	private Map<String, String> createFilePathGroupMap() {
 		return filePathGroupList.stream()
-				.sorted(ComparatorUtils.comparingNaturalOrderNullsLast(FilePathGroupDto::getOrder))
+				.sorted(ComparatorUtils.nullsLast(ComparatorUtils.ascending(FilePathGroupDto::getOrder)))
 				.collect(CollectorUtils.collectLinkedHashMap(FilePathGroupDto::getGroupId, FilePathGroupDto::getGroup));
 	}
 
