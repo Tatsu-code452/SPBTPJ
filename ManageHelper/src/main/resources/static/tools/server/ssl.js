@@ -13,7 +13,7 @@ cert.publicKey = keys.publicKey;
 cert.serialNumber = "01";
 cert.validity.notBefore = new Date();
 cert.validity.notAfter = new Date();
-cert.validity.notAfter.setFullYear(cert.validity.notBefore.getFullYear() + 1);
+cert.validity.notAfter.setFullYear(cert.validity.notBefore.getFullYear() + 2); // 有効期限を2年に延長
 
 // 証明書のSubjectとIssuerを設定 (自己署名なので同じ)
 const attrs = [
@@ -68,7 +68,9 @@ const extensions = [
         name: "subjectAltName",
         altNames: [
             { type: 2, value: "localhost" }, // DNS名
-            { type: 7, ip: "127.0.0.1" },   // IPアドレス
+            { type: 7, ip: "127.0.0.1" }, // IPアドレス
+            { type: 2, value: "localExample.com" }, // 外部ドメイン
+            { type: 7, ip: "192.168.100.119" }, // 外部IPアドレス
         ],
     },
 ];
