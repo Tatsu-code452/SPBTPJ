@@ -1,0 +1,7 @@
+Data3Dto:class
+data1:int:2
+data2:Integer:4
+data3:Long:6
+data4:BigDecimal:3
+data5:String:5
+data6:List<String>:3:4

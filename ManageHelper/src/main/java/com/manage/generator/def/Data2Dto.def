@@ -1,0 +1,15 @@
+Data2Dto:class
+data1:int:5
+data2:Integer:2
+data3:Long:4
+data4:BigDecimal:3
+data5:String:67
+data6:List<String>:2:12
+data7:List<Data2InnerDto>:134:3
+Data2InnerDto:innerClass
+data1:int:5
+data2:Integer:3
+data3:Long:2
+data4:BigDecimal:7
+data5:String:2
+data6:List<String>:5:23

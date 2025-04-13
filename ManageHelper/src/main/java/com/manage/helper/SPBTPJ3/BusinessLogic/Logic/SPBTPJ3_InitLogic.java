@@ -7,6 +7,7 @@ import java.util.stream.IntStream;
 
 import org.springframework.stereotype.Component;
 
+import com.manage.generator.LogicClass;
 import com.manage.helper.COMMON.BaseLogic;
 import com.manage.helper.DAO.FilePathDao;
 import com.manage.helper.DAO.FilePathGroupDao;
@@ -19,6 +20,7 @@ import com.manage.helper.SPBTPJ3.ViewModel.SPBTPJ3_TableData;
 
 import lombok.RequiredArgsConstructor;
 
+@LogicClass
 @Component
 @RequiredArgsConstructor
 public class SPBTPJ3_InitLogic extends BaseLogic<SPBTPJ3_InitBDto> {

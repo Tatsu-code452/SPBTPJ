@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
+import com.manage.generator.LogicClass;
 import com.manage.helper.COMMON.BaseLogic;
 import com.manage.helper.DAO.FilePathDao;
 import com.manage.helper.DAO.DaoModel.FilePathDto;
@@ -16,6 +17,7 @@ import com.manage.helperUtil.ComparatorUtils;
 
 import lombok.RequiredArgsConstructor;
 
+@LogicClass
 @Component
 @RequiredArgsConstructor
 public class SPBTPJ3_UpdateLogic extends BaseLogic<SPBTPJ3_UpdateBDto> {
